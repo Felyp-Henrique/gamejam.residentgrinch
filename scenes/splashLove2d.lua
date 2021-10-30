@@ -63,7 +63,7 @@ function splashLove2d:update(dt)
      if self.timer >= (self.fadeIn + self.tempoTela + self.fadeOut) then
         -- feio, eu sei, mas funcional!!!
         love.graphics.setColor(1, 1, 1, 1)
-        self.scene:change("menu")
+        self.scene:change("secondsplash")
      end
      
 end
