@@ -1,3 +1,4 @@
+local Splash = require('scenes.splashLove2d')
 local Scene = require('core.scene')
 local MenuScene = require('scenes.menu')
 local BattlefieldScene = require('scenes.battlefield')
@@ -8,12 +9,13 @@ local GameOverScene = require('scenes.gameover')
 local scene = Scene:new()
 
 function love.load()
+    scene:add('splash', Splash:new(scene))
     scene:add('menu', MenuScene:new(scene))
     scene:add('battlefield', BattlefieldScene:new(scene))
     scene:add('gameover', GameOverScene:new(scene))
 
-    -- cena inicial
-    scene:change('menu')
+    -- scene:change('splash') -- o primeiro deve ser esse! e remover os demais!
+     scene:change('menu') -- para teste
 end
 
 function love.draw()
