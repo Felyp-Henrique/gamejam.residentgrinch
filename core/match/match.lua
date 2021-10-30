@@ -1,6 +1,7 @@
 local Dificults = require('core.match.dificults')
 local Hero = require('core.match.hero')
 local Enemy = require('core.match.enemy')
+local EnemyFactory = require('core.match.enemyfactory')
 
 Match = {}
 
@@ -26,15 +27,25 @@ function Match:gameOver()
     self.scene:change(self.gameOverScene)
 end
 
-function Match:generateEnemies()
+function Match:enemiesPosition()
+    math.randomseed(os.time())
+    local nx, ny
+    local vertical = math.floor(math.random(1.5, 2.5))
+    if vertical == 1 then
+        nx = math.floor(math.random(0.5, 1.5)) * 800
+        -- X = 0 ou 1 e y = faixa 0 até 600
+        ny = math.floor(math.random(0, 600))
+    else
+        nx = math.floor(math.random(0, 800))
+        ny = math.floor(math.random(0.5, 1.5)) * 600
+    end
+    return nx, ny
+end
+
+function Match:enemiesGenerator()
     for _ = 1, 10 do
-        local x = math.floor(math.random(0.5, 1.5)) * 800
-        local y = math.floor(math.random(0.5, 1.5)) * 600
-        local enemy = Enemy:new {
-            nick = 'Aranha',
-            x = x,
-            y = y,
-        }
+        local x, y = self:enemiesPosition()
+        local enemy = EnemyFactory.random(x, y)
         enemy:load()
         table.insert(self.enemies, enemy)
     end
@@ -49,7 +60,6 @@ function Match:load()
 end
 
 function Match:draw()
-    print(math.floor(math.random(0.5, 1.5)) * 800)
     for _, enemy in ipairs(self.enemies) do
         enemy:draw()
     end
@@ -59,7 +69,7 @@ function Match:update(dt)
     self.timer = self.timer + dt
     if self.timer >= 3 then
         if #self.enemies == 0 then
-            self:generateEnemies()
+            self:enemiesGenerator()
         end
         self.timer = 0
     end

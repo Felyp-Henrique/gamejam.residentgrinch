@@ -6,7 +6,6 @@ function Enemy:new(values)
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
-    self.id = values.id or 0
     self.nick = values.nick or ""
     self.life = values.life or 100
     self.points = values.points or 0
@@ -52,7 +51,7 @@ end
 function Enemy:draw()
     love.graphics.draw(
         self.sprite.image,
-        self.x - 20,
+        self.x,
         self.y,
         self.r,
         self.sx,
