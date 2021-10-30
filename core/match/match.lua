@@ -57,15 +57,20 @@ function Match:load()
     if not self.hero then
         self.hero = Hero:new { nick = 'Heroi' }
     end
+    self.hero:load()
 end
 
 function Match:draw()
+    self.hero:draw()
+
     for _, enemy in ipairs(self.enemies) do
         enemy:draw()
     end
 end
 
 function Match:update(dt)
+    self.hero:update(dt)
+
     self.timer = self.timer + dt
     if self.timer >= 3 then
         if #self.enemies == 0 then

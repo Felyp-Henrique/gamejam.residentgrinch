@@ -40,9 +40,11 @@ function Enemy:load()
     if not self.sprite then
         self.sprite = Image:new('assets/sprites/hero.png')
         self.sprite:load()
+    else
+        self.sprite:load()
     end
-    self.sx = 0.10
-    self.sy = 0.10
+    self.sx = 1
+    self.sy = 1
 end
 
 function Enemy:update(dt)
