@@ -36,8 +36,8 @@ function splashLove2d:load()
     self.playSound = true
     self.timer = 0
     self.fadeIn = 2 -- segundos
-    self.fadeOut = 2
     self.tempoTela = 0
+    self.fadeOut = 2
     self.alpha = 0 -- Se existir fadeIn
 end
 
@@ -65,7 +65,6 @@ function splashLove2d:update(dt)
         love.graphics.setColor(1, 1, 1, 1)
         self.scene:change("secondsplash")
      end
-     
 end
 
 function splashLove2d:draw( dt )

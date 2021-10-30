@@ -16,6 +16,12 @@ function MenuScene:load()
     self:__config_font()
     self:__config_menu()
     self:__config_keys()
+    
+    -- background
+    self.bkground = Image:new('assets/pictures/menubkgroundrev01.png')
+    self.bkground:load()
+    self.bkground.x = (love.graphics.getWidth() / 2) - (self.bkground.width / 2)
+    self.bkground.y = (love.graphics.getHeight() / 2) - (self.bkground.height / 2)
 end
 
 function MenuScene:update(dt)
@@ -26,6 +32,7 @@ end
 function MenuScene:draw()
     love.graphics.clear()
     love.graphics.setBackgroundColor(255, 255, 255, 1)
+    love.graphics.draw(self.bkground.image, self.bkground.x, self.bkground.y)
     love.graphics.print("Aqui deve conter o menu inicial" , 10  , 10)
     love.graphics.print("Pressione P para ir para prototipo fog of war" , 10  , 40)
     love.graphics.print(self.menu.text , self.menu.x  , self.menu.y)
