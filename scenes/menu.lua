@@ -24,7 +24,7 @@ function MenuScene:load()
     self.timerFadeIn = 0
     self.timerFadeOut = 0
     self.fadeIn = 3
-    self.fadeOut = 1 -- audio 5 secs
+    self.fadeOut = 5 -- audio 5 secs
 
     self.initGame = false
     
@@ -111,13 +111,6 @@ end
 
 function MenuScene:__config_keys()
     self.keys = {}
-    self.keys.f11 = function ()
-        self.tela.fullscreen = not self.tela.fullscreen
-        love.window.setFullscreen(self.tela.fullscreen, 'desktop')
-    end
-    self.keys.escape = function ()
-        love.event.quit(0)
-    end
     self.keys['return'] = function()
         self.initGame = true
     end
