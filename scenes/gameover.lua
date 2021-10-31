@@ -1,3 +1,5 @@
+local Image = require('core.image')
+
 GameOverScene = {}
 
 function GameOverScene:new(manager)
@@ -6,19 +8,27 @@ function GameOverScene:new(manager)
     setmetatable(obj, self)
     self.__index = self
     self.scene = manager
+    self.image = nil
     return obj
 end
 
 -- metodos principais
 
 function GameOverScene:load()
+    self.image = Image:new()
+    self.image.path = 'assets/pictures/gameover.png'
+    self.image:load()
     self:__config_font()
     self:__config_keys()
 end
 
 function GameOverScene:draw()
-    love.graphics.print('Game Over', 10, 300-80)
-    love.graphics.print('Aperte Enter', 10, 300+80)
+    love.graphics.draw(
+        self.image.image,
+        0,
+        0,
+        0
+    )
 end
 
 function GameOverScene:keypressed(key, scancode, isrepeat)
