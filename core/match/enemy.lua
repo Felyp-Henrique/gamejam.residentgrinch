@@ -1,5 +1,6 @@
 local Image = require('core.image')
-local anim8 = require('core.anim8')
+--local anim8 = require('core.anim8')
+ local flux = require('core.flux')
 
 Enemy = {}
 
@@ -46,18 +47,25 @@ function Enemy:load()
     self.sy = 1
 
     -- ANIM8
-    local g = anim8.newGrid(32, 32, self.sprite.width, self.sprite.height)
-    animation = anim8.newAnimation(g('1-4',1), 0.25)
-
+    --local g = anim8.newGrid(32, 32, self.sprite.width, self.sprite.height)
+    --animation = anim8.newAnimation(g('1-4',1), 1)
+    flux.to(self, 10, { x = 400, y =  300}):ease("linear"):delay(2)
+    -- delay: o movimento começa após n segundos
+    -- ease: é o formato -> ver em: https://github.com/rxi/flux/ -> nem todas funcionam, ver code
+    -- x e y é o alvo (centro da tela)
+    -- numero 10 -> tempo de processamento da origem até o destino
+    -- self!
 end
 
 function Enemy:update(dt)
     -- ANIM8
-    animation:update(dt)
+    --animation:update(dt)
+    flux.update(dt)
+    texto = tostring(dt)
 end
 
 function Enemy:draw()
-    --[[
+    
     love.graphics.draw(
         self.sprite.image,
         self.x,
@@ -67,12 +75,12 @@ function Enemy:draw()
         self.sy,
         40,
         40
-    )--]]
+    )
 
     -- ANIM8
-    animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,40,40)
+    --animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,40,40)
     love.graphics.setColor(0,0,0,1)
-    love.graphics.print("t: " .. texto .. tostring(self.sprite.width) .. " " .. tostring(self.sprite.height), 10, 10)
+    love.graphics.print("t: " .. texto, 10, 10)
 end
 
 

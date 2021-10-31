@@ -20,7 +20,7 @@ function Image:load()
     self.image = love.graphics.newImage(self.path)
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
-    return "load() " .. tostring(self.width) .. " "
+    return 
 end
 
 return Image
