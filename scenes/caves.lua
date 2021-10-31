@@ -26,6 +26,7 @@ function CavesScene:load()
     self.status = Status:new(self.match)
     -- configurar efeitos
     self.effects.fog = FogEffect:new()
+    self.effects.fog.match = self.match
     -- configurar tiles
     self.tiles.floor = Image:new()
     self.tiles.floor.path = 'assets/tiles/caves/floor.png'
@@ -61,6 +62,8 @@ end
 function CavesScene:update(dt)
     self.match:update(dt)
     self.status.match = self.match
+    self.effects.fog.match = self.match
+    self.effects.fog:update(dt)
 end
 
 function CavesScene:mousepressed(x, y, button)

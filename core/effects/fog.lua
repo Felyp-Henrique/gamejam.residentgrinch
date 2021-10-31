@@ -7,6 +7,7 @@ function FogEffect:new()
     setmetatable(obj, self)
     self.__index = self
     self.picture = nil
+    self.match = nil
     return obj
 end
 
@@ -28,7 +29,7 @@ function FogEffect:load()
 end
 
 function FogEffect:draw()
-    love.graphics.setColor(1, 1, 1, self.fogalpha)
+    love.graphics.setColor(1, 1, 1, self.picturealpha)
     love.graphics.draw(
         self.picture.image,
         self.picture.x, self.picture.y,
@@ -41,8 +42,9 @@ end
 function FogEffect:update(dt)
     local delta = self.match.fogalphadelta
 
-    if ((self.fogalpha + delta) >= 0) and ((self.fogalpha+delta) < 2) then
-        self.fogalpha = self.fogalpha + delta
+    if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 2) then
+        self.picturealpha = self.picturealpha + delta
+        print(self.picturealpha)
     end
 end
 
