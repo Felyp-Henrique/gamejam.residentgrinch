@@ -63,6 +63,10 @@ function Hero:load()
     -- ANIM8
     local g = anim8.newGrid(48, 48, self.spriteataque.width, self.spriteataque.height)
     self.animationataque = anim8.newAnimation(g('1-3',1), 2/3)
+
+
+    timerataque = 1
+    timer2ataque = 0
 end
 
 function Hero:update(dt)
@@ -88,6 +92,12 @@ function Hero:update(dt)
             proj:update(dt)
         end
     end
+
+ 
+    timer2ataque = timer2ataque + dt
+
+
+
 end
 
 function Hero:draw()
@@ -128,14 +138,17 @@ end
 function Hero:__configMouse()
     self.mouse = {}
     self.mouse[1] = function()
-        local x1, y1 = self:__getPostion()
-        local direction1 = math.atan2(love.mouse.getY() - y1, love.mouse.getX() - x1)
-        local proj = Projectile:new()
-        proj.x = x1
-        proj.y = y1
-        proj.direction = direction1
-        proj:load()
-        table.insert(self.projectiles, proj)
+        if timer2ataque > timerataque then 
+            local x1, y1 = self:__getPostion()
+            local direction1 = math.atan2(love.mouse.getY() - y1, love.mouse.getX() - x1)
+            local proj = Projectile:new()
+            proj.x = x1
+            proj.y = y1
+            proj.direction = direction1
+            proj:load()
+            table.insert(self.projectiles, proj)
+            timer2ataque = 0
+        end
     end
 end
 

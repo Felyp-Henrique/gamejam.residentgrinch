@@ -42,10 +42,13 @@ end
 function FogEffect:update(dt)
     local delta = self.match.fogalphadelta
 
-    if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 2) then
-        self.picturealpha = self.picturealpha + delta
-        print(self.picturealpha)
-    end
+    self.match.fogalphadelta = 0
+    return
+
+    --if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 2) then
+     --   self.picturealpha = self.picturealpha + delta
+     --   print(self.picturealpha)
+    ---end
 end
 
 return FogEffect
