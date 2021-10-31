@@ -71,7 +71,6 @@ function Match:draw()
     for _, enemy in ipairs(self.enemies) do
         enemy:draw()
     end
-
 end
 
 function Match:update(dt)
@@ -83,8 +82,29 @@ function Match:update(dt)
         self:enemiesGenerator()
         self.timer = 0
     end
-    for _, e in ipairs(self.enemies) do
+
+    local destroy = {}
+    for i, e in ipairs(self.enemies) do
         e:update(dt)
+        if self.hero.area:collided(e.area) then
+            e:setState('stoped')
+            table.insert(destroy, i)
+            self.hero:danger(e.force)
+            goto continue
+        end
+        if self.hero:collidedProjectiles(e.area) then
+            e:setState('stoped')
+            table.insert(destroy, i)
+            self.points = self.points + e.points
+            goto continue
+        end
+        ::continue::
+    end
+    for i, _ in ipairs(destroy) do
+        table.remove(self.enemies, i)
+    end
+    if self.hero.life < 1 then
+        self:gameOver()
     end
     
     
@@ -95,22 +115,5 @@ end
 function Match:mousepressed(x, y, button)
     self.hero:mousepressed(x, y, button)
 end
-
--- function random()
---     local oldrandom = math.random
---     local randomtable
---     math.random = function (m, n)
---         if randomtable == nil then
---             randomtable = {}
---             for i = 1, 97 do
---                 randomtable[i] = oldrandom()
---             end
---         end
---         local x = oldrandom(m, n)
---         local i = 1 + math.floor(97*x)
---         x, randomtable[i] = randomtable[i], x
---         return x
---     end
--- end
 
 return Match

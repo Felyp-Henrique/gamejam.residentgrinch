@@ -21,12 +21,6 @@ function Projectile:new(values)
     return obj
 end
 
--- metodo principais
-
-function Projectile:collided(area)
-    return self.area:collided(area)
-end
-
 -- metodos do love
 
 function Projectile:load()
