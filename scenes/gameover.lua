@@ -17,11 +17,8 @@ function GameOverScene:load()
 end
 
 function GameOverScene:draw()
-    love.graphics.setBackgroundColor(255, 255, 255, 1)
-    local text = 'Game Over'
-    local posX = love.graphics.getWidth() / 2 - self.font:getWidth(text) / 2
-    local posY = love.graphics.getHeight() / 2 - self.font:getHeight() / 2
-    love.graphics.print(text, posX, posY)
+    love.graphics.print('Game Over', 10, 300-80)
+    love.graphics.print('Aperte Enter', 10, 300+80)
 end
 
 function GameOverScene:keypressed(key, scancode, isrepeat)
@@ -34,13 +31,13 @@ end
 -- helpers
 
 function GameOverScene:__config_font()
-    self.font = love.graphics.newFont(30)
+    self.font = love.graphics.newFont(80)
 end
 
 function GameOverScene:__config_keys()
     self.keys = {}
     self.keys['return'] = function()
-        self.scene:change('menu')
+        love.event.quit('restart')
     end
 end
 

@@ -12,16 +12,17 @@ function Enemy:new(values)
     self.__index = self
     self.nick = values.nick or ""
     self.life = values.life or 100
-    self.points = values.points or 0
-    self.force = values.force or 20
+    self.points = values.points or 1
+    self.force = values.force or 10
     self.x = values.x or 0
     self.y = values.y or 0
     self.r = values.r or 0
     self.sx = 0
     self.sy = 0
     self.sprite = values.sprite or nil
-    self.isWalking = true
+    self.state = 'walking'
     self.area = Area:new()
+    self.tween = nil
     return obj
 end
 
@@ -31,13 +32,8 @@ function Enemy:danger(force)
     self.life = self.life - force
 end
 
-function Enemy:move(x, y)
-    self.x = x or self.x
-    self.y = y or self.y
-end
-
-function Enemy:collided(area)
-    return self.area:collided(area)
+function Enemy:setState(state)
+    self.state = state
 end
 
 -- metodos para o love
@@ -64,7 +60,8 @@ function Enemy:load()
     -- 
 
     -- apenas para testes, deixar valores "rapidos"
-    flux.to(self, 2, { x = 400, y =  300}):ease("linear"):delay(0)
+    self.tween = flux.to(self, 2, { x = 400, y =  300})
+    self.tween:ease("linear"):delay(0)
     -- delay: o movimento começa após n segundos
     -- ease: é o formato -> ver em: https://github.com/rxi/flux/ -> nem todas funcionam, ver code
     -- x e y é o alvo (centro da tela)
@@ -74,8 +71,10 @@ end
 
 function Enemy:update(dt)
     -- ANIM8
-    if self.isWalking then
+    if self.state ~= 'stoped' then
         self.animation:update(dt)
+    else
+        self.tween:stop()
     end
     self.area.x = self.x
     self.area.y = self.y

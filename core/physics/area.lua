@@ -16,14 +16,18 @@ function Area:new()
 end
 
 function Area:collided(area)
-    if area.x >= (self.x - 10) and
-       area.x <= (self.width + 10) and
-       area.y >= (self.y - 10) and
-       area.y <= (self.height + 10)
-    then
-        return true
-    end
-    return false
+    -- dividi os heights por 3 para diminuir mais as areas, deixando o inimigo
+    -- mais proximo do heroi
+    local dis = distancia(self.x, self.y, area.x, area.y) - ((self.height/3) + (area.height/3))
+    return dis <= 0
+end
+
+function Area:getXs()
+
+end
+
+function distancia(x1, y1, x2, y2)
+    return math.sqrt((x2-x1)^2 + (y2-y1)^2)
 end
 
 return Area
