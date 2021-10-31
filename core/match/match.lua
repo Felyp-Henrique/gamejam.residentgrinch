@@ -78,6 +78,10 @@ function Match:update(dt)
         end
         self.timer = 0
     end
+    for _, e in ipairs(self.enemies) do
+        e:update(dt)
+    end
+
 end
 
 function Match:mousepressed(x, y, button)
