@@ -23,10 +23,6 @@ function love.load()
     scene:add('caves', CavesScene:new(scene))
     scene:add('gameover', GameOverScene:new(scene))
 
-    -- scene:change('splash') -- o primeiro deve ser esse! e remover os demais!
-    -- scene:change('secondsplash') -- para teste
-    -- scene:change('splash') -- para teste
-
     scene:change('menu') -- para testes
 end
 
