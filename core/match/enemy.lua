@@ -20,6 +20,10 @@ function Enemy:new(values)
     self.sx = 0
     self.sy = 0
     self.sprite = values.sprite or nil
+    self.audio_death = values.audio or nil
+    self.audioplay_death = true
+    self.audio_spawn = values.audio or nil
+    self.audioplay_spawn = true
     self.isWalking = true
     self.area = Area:new()
     return obj
@@ -79,6 +83,8 @@ function Enemy:update(dt)
     end
     self.area.x = self.x
     self.area.y = self.y
+
+    self:speech()
 end
 
 function Enemy:draw()
@@ -90,6 +96,21 @@ function Enemy:draw()
     love.graphics.setColor(0,0,0,1)
 end
 
+function Enemy:speech()
+    -- death    
+    if (self.life >= 0) and (self.audioplay_death) then 
+        self.audio_death:setVolume( 0.5 )
+        self.audio_death:play()
+        self.audioplay_death = false
+    end
 
+    -- spawn
+    if self.audioplay_spawn then 
+        self.audio_spawn:setVolume( 0.1 )
+        self.audio_spawn:play()
+        self.audioplay_spawn = false
+    end
+    love.audio.setVolume( 1 )
+end
 
 return Enemy

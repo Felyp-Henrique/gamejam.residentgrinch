@@ -10,6 +10,9 @@ function EnemyFactory.spider(x, y)
     enemy.nick = 'Spider'
     enemy.x = x
     enemy.y = y
+
+    enemy.audio_spawn = love.audio.newSource("assets/audios/spider_spawn.ogg", "static")
+    enemy.audio_death = love.audio.newSource("assets/audios/spider_death.ogg", "static")    
     return enemy
 end
 
@@ -19,6 +22,8 @@ function EnemyFactory.mouse(x, y)
     enemy.x = x
     enemy.y = y
     enemy.sprite = Image:new('assets/sprites/mouse_walk.png') -- mouse_walk
+    enemy.audio_spawn = love.audio.newSource("assets/audios/mouse_spawn" .. pickOne(2) .. ".ogg", "static")
+    enemy.audio_death = love.audio.newSource("assets/audios/mouse_death.ogg", "static")
     return enemy
 end
 
@@ -27,6 +32,9 @@ function EnemyFactory.bat(x, y)
     enemy.nick = 'Bat'
     enemy.x = x
     enemy.y = y
+
+    enemy.audio_spawn = love.audio.newSource("assets/audios/bat_spawn.ogg", "static")
+    enemy.audio_death = love.audio.newSource("assets/audios/bat_death.ogg", "static")    
     return enemy
 end
 
@@ -35,6 +43,8 @@ function EnemyFactory.pumpkin(x, y)
     enemy.nick = 'Pumpkin'
     enemy.x = x
     enemy.y = y
+    enemy.audio_spawn = love.audio.newSource("assets/audios/abobora_spawn.ogg", "static")
+    enemy.audio_death = love.audio.newSource("assets/audios/abobora_death.ogg", "static")    
     return enemy
 end
 
@@ -51,6 +61,14 @@ function EnemyFactory.random(x, y)
     --elseif index == 3 then
     --    return EnemyFactory.pumpkin(x, y)
     --end
+end
+
+function pickOne(max)
+    math.randomseed(os.time())
+    math.random()
+    math.random()
+    math.random()
+    return tostring(math.floor(math.random(1.5,0.5+max)))
 end
 
 return EnemyFactory

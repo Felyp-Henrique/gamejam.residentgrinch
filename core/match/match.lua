@@ -86,6 +86,9 @@ function Match:update(dt)
     for _, e in ipairs(self.enemies) do
         e:update(dt)
     end
+    
+    
+    
 
 end
 
