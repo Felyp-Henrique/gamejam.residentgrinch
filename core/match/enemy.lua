@@ -63,8 +63,6 @@ end
 function Enemy:update(dt)
     -- ANIM8
     self.animation:update(dt)
-    flux.update(dt)
-    texto = tostring(dt)
 end
 
 function Enemy:draw()

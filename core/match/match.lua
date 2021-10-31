@@ -2,6 +2,7 @@ local Dificults = require('core.match.dificults')
 local Hero = require('core.match.hero')
 local Enemy = require('core.match.enemy')
 local EnemyFactory = require('core.match.enemyfactory')
+local flux = require('core.flux')
 
 Match = {}
 
@@ -44,7 +45,6 @@ end
 function Match:enemiesGenerator()
     -- for _ = 1, 10 do
         local x, y = self:enemiesPosition()
-        print(x, y)
         local enemy = EnemyFactory.random(x, y)
         enemy:load()
         table.insert(self.enemies, enemy)
@@ -74,6 +74,7 @@ end
 
 function Match:update(dt)
     self.hero:update(dt)
+    flux.update(dt)
 
     self.timer = self.timer + dt
     if self.timer >= 1.5 then
