@@ -8,13 +8,14 @@ function FogEffect:new()
     self.__index = self
     self.picture = nil
     self.match = nil
+    self.timer = 0
     return obj
 end
 
 function FogEffect:load()
     if not self.picture then
         self.picture = Image:new()
-        self.picture.path = 'assets/pictures/fogofwarrev03.png'
+        self.picture.path = 'assets/pictures/fog_normal.png'
     end
     self.picture.x = (love.graphics.getWidth() / 2)
     self.picture.y = (love.graphics.getHeight() / 2)
@@ -40,10 +41,13 @@ function FogEffect:draw()
 end
 
 function FogEffect:update(dt)
+    self.timer = self.timer + dt
     local delta = self.match.fogalphadelta
-
-    if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 0.1) then
-        self.picturealpha = self.picturealpha + delta
+    if self.timer > 0.5 then
+        if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 1) then
+            self.picturealpha = self.picturealpha + delta
+        end
+        self.timer = 0
     end
 end
 
