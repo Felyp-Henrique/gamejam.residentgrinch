@@ -104,7 +104,7 @@ function MenuScene:__config_tela()
     self.tela.fullscreen = self.tela.fullscreen or false
     self.tela.largura = love.graphics.getWidth()
     self.tela.altura = love.graphics.getHeight()
-    self.globalScale = self.tela.altura / 600
+    self.globalScale = self.tela.altura / 600 -- 600 é a altura base
     self.tela.centerx = love.graphics.getWidth() / 2
     self.tela.centery = love.graphics.getHeight() / 2
 end
