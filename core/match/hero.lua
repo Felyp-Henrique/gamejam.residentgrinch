@@ -12,8 +12,8 @@ function Hero:new(values)
     self.r = 0
     self.sx = 1
     self.sy = 1
-    self.ox = 24
-    self.oy = 24
+    self.ox = 0
+    self.oy = 0
     self.sprite = values.sprite
     self.projectiles = {}
     return obj
@@ -32,7 +32,7 @@ function Hero:load()
         self.sprite = Image:new('assets/sprites/grinch.png')
         self.sprite:load()
         self.ox = self.sprite.width / 2 -- centralizar na tela
-        self.ox = self.sprite.height / 2
+        self.oy = self.sprite.height / 2
     else
         self.sprite:load()
     end

@@ -52,7 +52,8 @@ function Enemy:load()
     -- g(gridindex 1 até 4, grid passo?), duracaoEmSecsPORFRAME)
     -- 
 
-    flux.to(self, 10, { x = 400, y =  300}):ease("linear"):delay(2)
+    -- apenas para testes, deixar valores "rapidos"
+    flux.to(self, 2, { x = 400, y =  300}):ease("linear"):delay(0)
     -- delay: o movimento começa após n segundos
     -- ease: é o formato -> ver em: https://github.com/rxi/flux/ -> nem todas funcionam, ver code
     -- x e y é o alvo (centro da tela)
@@ -79,10 +80,10 @@ function Enemy:draw()
     )]]
 
     -- ANIM8
-    self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,40,40)
+    self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,self.sprite.ox,self.sprite.oy)
 
     love.graphics.setColor(0,0,0,1)
-    love.graphics.print("t: " .. texto, 10, 10)
+    love.graphics.print("t: " .. tostring(self.sprite.ox), 10, 10)
 end
 
 
