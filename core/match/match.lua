@@ -20,6 +20,10 @@ function Match:new(values)
     self.gameOverScene = values.gameOverScene or "gameover"
     self.timer = 0
     self.fogalphadelta = 0.005
+    self.boss = false
+    self.bossGenerated = false
+    self.bossCount = 0;
+    self.lastKill = false
     return obj
 end
 
@@ -44,12 +48,19 @@ function Match:enemiesPosition()
 end
 
 function Match:enemiesGenerator()
-    -- for _ = 1, 10 do
+    if not self.bossGenerated then
         local x, y = self:enemiesPosition()
-        local enemy = EnemyFactory.random(x, y)
-        enemy:load()
+        local enemy
+        if self.boss and #self.enemies == 0 then
+            enemy = EnemyFactory.boss(x, y)
+            enemy:load()
+            self.bossGenerated = true
+        elseif not self.boss then
+            enemy = EnemyFactory.random(x, y)
+            enemy:load()
+        end
         table.insert(self.enemies, enemy)
-    -- end
+    end
 end
 
 -- metodos para o love
@@ -59,6 +70,7 @@ function Match:load()
         self.hero = Hero:new { nick = 'Heroi' }
         self.hero.spriteataque = Image:new()
         self.hero.spriteataque.path = 'assets/sprites/grinch_ataque.png'
+        self.hero.match = self
     end
     self.hero:load()
     math.randomseed(os.time())
@@ -95,9 +107,16 @@ function Match:update(dt)
             goto continue
         end
         if self.hero:collidedProjectiles(e.area) then
-            e:setState('stoped')
-            table.insert(destroy, i)
-            self.points = self.points + e.points
+            if not self.boss or not self.lastKill then
+                e:setState('stoped')
+                table.insert(destroy, i)
+                self.points = self.points + e.points
+                if self.boss then
+                    self.lastKill = true
+                end
+            elseif self.bossCount >= 3 then
+                self:gameOver()
+            end
             goto continue
         end
         ::continue::

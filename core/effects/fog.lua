@@ -46,6 +46,8 @@ function FogEffect:update(dt)
     if self.timer > 0.5 then
         if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 1) then
             self.picturealpha = self.picturealpha + delta
+        else
+            self.match.boss = true
         end
         self.timer = 0
     end
