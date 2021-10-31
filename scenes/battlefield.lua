@@ -1,5 +1,6 @@
 local Image = require('core.image')
 local Match = require('core.match.match')
+local Status = require('core.ui.status')
 
 BattlefieldScene = {}
 
@@ -10,6 +11,7 @@ function BattlefieldScene:new(manager)
     self.__index = self
     self.scene = manager
     self.match = Match:new { manager = manager }
+    self.status = nil
     return obj
 end
 
@@ -31,11 +33,11 @@ function BattlefieldScene:load()
     -- sobreescrever ox
     self.fog.ox = self.fog.width / 2
     self.match:load()
+    self.status = Status:new(self.match)
 end
 
 function BattlefieldScene:draw()
     self.match:draw()
-    
     love.graphics.setColor(1,1,1,self.fogalpha)
     love.graphics.draw(self.fog.image, 
         self.fog.x, self.fog.y,   
@@ -44,12 +46,13 @@ function BattlefieldScene:draw()
         self.fog.ox, self.fog.oy)
 
     love.graphics.setColor(1,1,1,1)
-    --love.graphics.print()
+    self.status:draw()
 end
 
 function BattlefieldScene:update(dt)
     self.match:update(dt)
     self:updatefog()
+    self.status.match = self.match
 end
 
 function BattlefieldScene:keypressed(key, scancode, isrepeat)

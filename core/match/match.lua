@@ -71,9 +71,6 @@ function Match:draw()
     for _, enemy in ipairs(self.enemies) do
         enemy:draw()
     end
-
-    love.graphics.print('Vida: ' .. tostring(self.hero.life), 10, 10)
-    love.graphics.print('Pontos: ' .. tostring(self.points), 10, 30)
 end
 
 function Match:update(dt)
