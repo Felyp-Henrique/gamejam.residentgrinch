@@ -49,10 +49,7 @@ function Hero:load()
         self.spriteataque:load()
         self.ox = self.sprite.width / 2 -- centralizar na tela
         self.oy = self.sprite.height / 2
---    else
---       self.sprite:load()
---        self.spriteataque:load()
---    end
+
     local x, y = self:__getPostion()
     self.area.width = self.sprite.width
     self.area.height = self.sprite.height
@@ -60,13 +57,15 @@ function Hero:load()
     self.area.y = y
     self:__configMouse()
 
+    self.estaatacando = false
+    self.timeratacando = 0.3
+
     -- ANIM8
     local g = anim8.newGrid(48, 48, self.spriteataque.width, self.spriteataque.height)
-    self.animationataque = anim8.newAnimation(g('1-3',1), 2/3)
+    self.animationataque = anim8.newAnimation(g('1-3',1), self.timeratacando / 3)
 
-
-    timerataque = 1
     timer2ataque = 0
+    timerataque = 0.75
 end
 
 function Hero:update(dt)
@@ -93,11 +92,16 @@ function Hero:update(dt)
         end
     end
 
- 
+    self.animationataque:update(dt)
+
+    if self.timeratacando > 0 and self.estaatacando then 
+        self.timeratacando = self.timeratacando - dt
+    end
+    if self.timeratacando <= 0 then 
+        self.estaatacando = false
+        self.timeratacando = 0.3
+    end
     timer2ataque = timer2ataque + dt
-
-
-
 end
 
 function Hero:draw()
@@ -108,16 +112,21 @@ function Hero:draw()
     local x, y = self:__getPostion()
 
     love.graphics.setColor(1,1,1,1)
-    love.graphics.draw(
-        self.sprite.image,
-        x,
-        y,
-        self.r,
-        self.sx,
-        self.sy,
-        self.ox,
-        self.oy
-    )
+    if self.estaatacando then 
+        -- anim do ataque
+        self.animationataque:draw(self.spriteataque.image,x,y,self.r,self.sx,self.sy,self.ox,self.oy)
+    else
+        love.graphics.draw(
+            self.sprite.image,
+            x,
+            y,
+            self.r,
+            self.sx,
+            self.sy,
+            self.ox,
+            self.oy
+        )
+    end
 end
 
 function Hero:mousepressed(x, y, button)
@@ -148,6 +157,7 @@ function Hero:__configMouse()
             proj:load()
             table.insert(self.projectiles, proj)
             timer2ataque = 0
+            self.estaatacando = true
         end
     end
 end
