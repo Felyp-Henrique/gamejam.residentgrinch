@@ -51,6 +51,10 @@ function Enemy:load()
     self.sx = 1
     self.sy = 1
 
+    local x, y = self:__getCenter()
+    -- math.atan2(love.mouse.getX() - x, y - love.mouse.getY())
+    -- self.r = math.atan2(x - self.x, y - self.y) - 0.5
+
     self.area.width = self.sprite.width
     self.area.height = self.sprite.height
     self.area.x = self.x
@@ -94,6 +98,12 @@ function Enemy:draw()
 
     --love.graphics.setColor(1,0,0,1)
     --love.graphics.print("t: " .. tostring(hh) .. "," .. tostring(ww) .. "," .. self.sprite.path , 100,200)
+end
+
+function Enemy:__getCenter()
+    local x = (love.graphics.getWidth() / 2)
+    local y = (love.graphics.getHeight() / 2)
+    return x, y
 end
 
 function Enemy:speech()
