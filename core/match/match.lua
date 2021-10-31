@@ -80,4 +80,8 @@ function Match:update(dt)
     end
 end
 
+function Match:mousepressed(x, y, button)
+    self.hero:mousepressed(x, y, button)
+end
+
 return Match

@@ -18,7 +18,7 @@ function love.load()
 
     -- scene:change('splash') -- o primeiro deve ser esse! e remover os demais!
     -- scene:change('secondsplash') -- para teste
-     scene:change('menu') -- para teste
+     scene:change('splash') -- para teste
 end
 
 function love.draw()
@@ -36,5 +36,11 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if scene:get()['keypressed'] then
         scene:get():keypressed(key, scancode, isrepeat)
+    end
+end
+
+function love.mousepressed(x, y, button)
+    if scene:get()['mousepressed'] then
+        scene:get():mousepressed(x, y, button)
     end
 end

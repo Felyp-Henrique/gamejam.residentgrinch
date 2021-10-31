@@ -21,12 +21,8 @@ end
 
 -- metodos principais
 
-function Enemy:attack(hero)
-    hero:bleed(self.force)
-end
-
-function Enemy:bleed(force)
-    self:bleed(force)
+function Enemy:danger(force)
+    self.life = self.life - force
 end
 
 function Enemy:move(x, y)

@@ -26,10 +26,6 @@ function BattlefieldScene:load()
 end
 
 function BattlefieldScene:draw()
-    -- love.graphics.setColor(255, 255, 255, 1)
-    -- love.graphics.setBackgroundColor(255, 255, 255, 1)
-    -- love.graphics.draw(
-    --     self.fog.image, self.fog.x, self.fog.y, 0, self.fog.sx, self.fog.sy)
     self.match:draw()
 end
 
