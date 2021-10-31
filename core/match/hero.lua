@@ -27,8 +27,13 @@ function Hero:danger(force)
     self.life = self.life - force
 end
 
-function Hero:collided(area)
-    return self.area:collided(area)
+function Hero:collidedProjectiles(area)
+    for _, proj in ipairs(self.projectiles) do
+        if proj.area:collided(area) then
+            return true
+        end
+    end
+    return false
 end
 
 -- metodos para o love
