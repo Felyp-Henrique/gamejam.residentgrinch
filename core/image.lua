@@ -24,7 +24,6 @@ function Image:load()
     self.height = self.image:getHeight()
     self.ox = (self.width / (self.width / self.height)) / 2 -- calcular com base na largura do spritesheet
     self.oy = self.height / 2
-    return 
 end
 
 return Image

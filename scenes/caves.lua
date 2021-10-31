@@ -39,10 +39,10 @@ function CavesScene:load()
 end
 
 function CavesScene:draw()
-    self.tiles.floor:draw()
+    -- self.tiles.floor:draw()
     self.match:draw()
-    self.effects.fog:draw()
-    self.stats:draw()
+    -- self.effects.fog:draw()
+    self.status:draw()
 end
 
 function CavesScene:update(dt)
