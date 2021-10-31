@@ -25,7 +25,8 @@ end
 
 function Projectile:load()
     if not self.sprite then
-        self.sprite = Image:new("assets/sprites/projectile.png")
+        self.sprite = Image:new("")
+        self.sprite.path = 'assets/sprites/projectile.png'
         self.sprite:load()
     else
         self.sprite:load()

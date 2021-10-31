@@ -30,7 +30,8 @@ function MenuScene:load()
     self.initGame = false
     
     -- background
-    self.bkground = Image:new('assets/pictures/menubkgroundrev01.png')
+    self.bkground = Image:new()
+    self.bkground.path = 'assets/pictures/menubkgroundrev01.png'
     self.bkground:load()
     self.bkground.x = (self.tela.centerx) 
     self.bkground.y = (self.tela.centery)
@@ -74,7 +75,7 @@ function MenuScene:update(dt)
     end
 
     if self.timerFadeOut > self.fadeOut then 
-        self.scene:change('battlefield')
+        self.scene:change('caves')
     end
 end
 

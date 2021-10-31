@@ -12,7 +12,8 @@ end
 
 function FogEffect:load()
     if not self.picture then
-        self.picture = Image:new('assets/pictures/fogofwarrev03.png')
+        self.picture = Image:new()
+        self.picture.path = 'assets/pictures/fogofwarrev03.png'
     end
     self.picture.x = (love.graphics.getWidth() / 2)
     self.picture.y = (love.graphics.getHeight() / 2)

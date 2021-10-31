@@ -41,11 +41,12 @@ end
 
 function Hero:load()
 --    if not self.sprite and not self.sprite.ataque then
-        self.sprite = Image:new('assets/sprites/grinch.png')
+        self.sprite = Image:new()
+        self.sprite.path = 'assets/sprites/grinch.png'
         self.sprite:load()
-        self.spriteataque = Image:new('assets/sprites/grinch_ataque.png')
+        self.spriteataque = Image:new()
+        self.spriteataque.path = 'assets/sprites/grinch_ataque.png'
         self.spriteataque:load()
-                
         self.ox = self.sprite.width / 2 -- centralizar na tela
         self.oy = self.sprite.height / 2
 --    else

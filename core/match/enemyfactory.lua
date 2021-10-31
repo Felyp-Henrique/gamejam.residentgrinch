@@ -11,8 +11,8 @@ function EnemyFactory.spider(x, y)
     enemy.x = x
     enemy.y = y
 
-    enemy.sprite = Image:new('') 
-    enemy.spdeath = Image:new('')
+    enemy.sprite = Image:new() 
+    enemy.spdeath = Image:new()
     enemy.sprite.path = ('assets/sprites/spider_spritesheet.png') -- mouse_walk
     enemy.spritedeath.path = ('assets/sprites/spider_death.png')
     enemy.audio_spawn = love.audio.newSource("assets/audios/spider_spawn.ogg", "static")
@@ -25,8 +25,8 @@ function EnemyFactory.mouse(x, y)
     enemy.nick = 'Mouse'
     enemy.x = x
     enemy.y = y
-    enemy.sprite = Image:new('') 
-    enemy.spdeath = Image:new('')
+    enemy.sprite = Image:new() 
+    enemy.spdeath = Image:new()
     enemy.sprite.path = 'assets/sprites/mouse_spritesheet.png'
     enemy.spdeath.path = 'assets/sprites/mouse_death.png'
     enemy.audio_spawn = love.audio.newSource("assets/audios/mouse_spawn" .. pickOne(2) .. ".ogg", "static")
@@ -40,8 +40,8 @@ function EnemyFactory.bat(x, y)
     enemy.x = x
     enemy.y = y
 
-    enemy.sprite = Image:new('') 
-    enemy.spdeath = Image:new('')
+    enemy.sprite = Image:new() 
+    enemy.spdeath = Image:new()
     enemy.sprite.path = ('assets/sprites/bat_spritesheet.png') -- mouse_walk
     enemy.spritedeath.path = ('assets/sprites/bat_death.png')
     enemy.audio_spawn = love.audio.newSource("assets/audios/bat_spawn.ogg", "static")
@@ -55,8 +55,8 @@ function EnemyFactory.pumpkin(x, y)
     enemy.x = x
     enemy.y = y
 
-    enemy.sprite = Image:new('') 
-    enemy.spdeath = Image:new('')
+    enemy.sprite = Image:new() 
+    enemy.spdeath = Image:new()
     enemy.sprite.path = ('assets/sprites/abobora_spritesheet.png') -- mouse_walk
     enemy.spritedeath.path = ('assets/sprites/abobora_death.png')
     enemy.audio_spawn = love.audio.newSource("assets/audios/abobora_spawn.ogg", "static")

@@ -1,7 +1,6 @@
 Image = {}
 
-function Image:new(path)
-    assert(path, "path nao pode ser nil")
+function Image:new()
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -14,7 +13,7 @@ function Image:new(path)
     self.sy = 0
     self.ox = 0
     self.oy = 0
-    self.path = path
+    self.path = nil
     return obj
 end
 

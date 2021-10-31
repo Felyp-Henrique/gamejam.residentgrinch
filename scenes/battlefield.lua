@@ -18,7 +18,8 @@ end
 -- metodos principais
 
 function BattlefieldScene:load()
-    self.fog = Image:new('assets/pictures/fogofwarrev03.png')
+    self.fog = Image:new()
+    self.fog.path = 'assets/pictures/fogofwarrev03.png'
     -- self.fog.x = (love.graphics.getWidth() / 2) - (self.fog.width / 2)
     -- self.fog.y = (love.graphics.getHeight() / 2) - (self.fog.height / 2)
     self.fog.x = (love.graphics.getWidth() / 2)
@@ -63,7 +64,6 @@ end
 
 function BattlefieldScene:mousepressed(x, y, button)
     self.match:mousepressed(x, y, button)
-
 end
 
 function BattlefieldScene:updatefog()

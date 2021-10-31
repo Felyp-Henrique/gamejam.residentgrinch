@@ -28,7 +28,8 @@ end
 -- metodos principais
 function splashLove2d:load()
     -- imagem Love2d
-    self.loveLogo = Image:new('assets/pictures/love2d_logo_rev01.png')
+    self.loveLogo = Image:new()
+    self.loveLogo.path = 'assets/pictures/love2d_logo_rev01.png'
     self.loveLogo:load()
     self.loveLogo.x = (love.graphics.getWidth() / 2) - (self.loveLogo.width / 2)
     self.loveLogo.y = (love.graphics.getHeight() / 2) - (self.loveLogo.height / 2)
