@@ -3,6 +3,7 @@ local SecondSplash = require('scenes.splashEquipe')
 local Scene = require('core.scene')
 local MenuScene = require('scenes.menu')
 local BattlefieldScene = require('scenes.battlefield')
+local CavesScene = require('scenes.caves')
 local GameOverScene = require('scenes.gameover')
 
 -- gerenciador de cenas
@@ -19,6 +20,7 @@ function love.load()
     scene:add('secondsplash', SecondSplash:new(scene))
     scene:add('menu', MenuScene:new(scene))
     scene:add('battlefield', BattlefieldScene:new(scene))
+    scene:add('caves', CavesScene:new(scene))
     scene:add('gameover', GameOverScene:new(scene))
 
     -- scene:change('splash') -- o primeiro deve ser esse! e remover os demais!

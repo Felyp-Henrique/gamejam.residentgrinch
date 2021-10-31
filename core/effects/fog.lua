@@ -6,12 +6,14 @@ function FogEffect:new()
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
-    self.picture = Image:new('assets/pictures/fogofwarrev03.png')
+    self.picture = nil
     return obj
 end
 
 function FogEffect:load()
-    assert(self.picture, 'picture nao pode ser nil')
+    if not self.picture then
+        self.picture = Image:new('assets/pictures/fogofwarrev03.png')
+    end
     self.picture.x = (love.graphics.getWidth() / 2)
     self.picture.y = (love.graphics.getHeight() / 2)
     self.picture.sx = 1
