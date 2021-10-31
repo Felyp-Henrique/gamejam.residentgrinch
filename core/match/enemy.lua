@@ -1,4 +1,5 @@
 local Image = require('core.image')
+local anim8 = require('core.anim8')
 
 Enemy = {}
 
@@ -38,24 +39,21 @@ function Enemy:load()
     if not self.sprite then
         self.sprite = Image:new('assets/sprites/hero.png')
         self.sprite:load()
-    else
-        texto =  self.sprite:load()
-        texto = texto .. " " .. tostring(self.sprite.width) .. " " .. tostring(self.sprite.height)
     end
+    self.sprite:load()
+
     self.sx = 1
     self.sy = 1
 
+    -- ANIM8
+    local g = anim8.newGrid(32, 32, self.sprite.width, self.sprite.height)
+    animation = anim8.newAnimation(g('1-4',1), 0.25)
 
-    -- ANIMACAO
-    animation = newAnimation(self.sprite, 32, 32, 4)
 end
 
 function Enemy:update(dt)
-    animation.currentTime = animation.currentTime + dt
-    if animation.currentTime >= animation.duration then
-        animation.currentTime = animation.currentTime - animation.duration
-    end
-    
+    -- ANIM8
+    animation:update(dt)
 end
 
 function Enemy:draw()
@@ -71,28 +69,12 @@ function Enemy:draw()
         40
     )--]]
 
-    -- ANIMACAO
-    local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
-    love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], self.x, self.y, 0, 2)
+    -- ANIM8
+    animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,40,40)
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.print("t: " .. texto .. tostring(self.sprite.width) .. " " .. tostring(self.sprite.height), 10, 10)
 end
 
--- ANIMACAO
-function newAnimation(sprite, width, height, duration)
-    local animation = {}
-    animation.spriteSheet = sprite.image;
-    animation.quads = {};
-
-    for y = 0, sprite.height - height,  height do
-        for x = 0, sprite.width - width, width do
-            table.insert(animation.quads, love.graphics.newQuad(x, y, width, height, sprite.image:getDimensions()))
-        end
-    end
-
-    animation.duration = duration or 1
-    animation.currentTime = 0
-
-    return animation
-end
 
 
 return Enemy
