@@ -1,6 +1,7 @@
 local Image = require('core.image')
 local Projectile = require('core.match.projectile')
 local Area = require('core.physics.area')
+local anim8 = require('core.anim8')
 
 Hero = {}
 
@@ -39,20 +40,28 @@ end
 -- metodos para o love
 
 function Hero:load()
-    if not self.sprite then
+--    if not self.sprite and not self.sprite.ataque then
         self.sprite = Image:new('assets/sprites/grinch.png')
         self.sprite:load()
+        self.spriteataque = Image:new('assets/sprites/grinch_ataque.png')
+        self.spriteataque:load()
+                
         self.ox = self.sprite.width / 2 -- centralizar na tela
         self.oy = self.sprite.height / 2
-    else
-        self.sprite:load()
-    end
+--    else
+--       self.sprite:load()
+--        self.spriteataque:load()
+--    end
     local x, y = self:__getPostion()
     self.area.width = self.sprite.width
     self.area.height = self.sprite.height
     self.area.x = x
     self.area.y = y
     self:__configMouse()
+
+    -- ANIM8
+    local g = anim8.newGrid(48, 48, self.spriteataque.width, self.spriteataque.height)
+    self.animationataque = anim8.newAnimation(g('1-3',1), 2/3)
 end
 
 function Hero:update(dt)

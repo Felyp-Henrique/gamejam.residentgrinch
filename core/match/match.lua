@@ -57,6 +57,7 @@ end
 function Match:load()
     if not self.hero then
         self.hero = Hero:new { nick = 'Heroi' }
+        self.hero.spriteataque = Image:new('assets/sprites/grinch_ataque.png')
     end
     self.hero:load()
     math.randomseed(os.time())

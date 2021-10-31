@@ -20,6 +20,7 @@ function Enemy:new(values)
     self.sx = 0
     self.sy = 0
     self.sprite = values.sprite or nil
+    self.spdeath = values.spdeath or nil
     self.audio_death = values.audio or nil
     self.audioplay_death = true
     self.audio_spawn = values.audio or nil
@@ -44,11 +45,8 @@ end
 -- metodos para o love
 
 function Enemy:load()
-    if not self.sprite then
-        self.sprite = Image:new('assets/sprites/hero.png')
-        self.sprite:load()
-    end
     self.sprite:load()
+    self.spdeath:load()
 
     self.sx = 1
     self.sy = 1
@@ -58,11 +56,12 @@ function Enemy:load()
     self.area.x = self.x
     self.area.y = self.y
 
+    ww = self.sprite.width
+    hh = self.sprite.height
     -- ANIM8
     local g = anim8.newGrid(32, 32, self.sprite.width, self.sprite.height)
     self.animation = anim8.newAnimation(g('1-4',1), 0.5)
-    -- g(gridindex 1 até 4, grid passo?), duracaoEmSecsPORFRAME)
-    -- 
+                    --g(gridindex 1 até 4, grid passo?), duracaoEmSecsPORFRAME)
 
     -- apenas para testes, deixar valores "rapidos"
     self.tween = flux.to(self, 2, { x = 400, y =  300})
@@ -91,9 +90,10 @@ function Enemy:draw()
     love.graphics.setColor(1,1,1,1)
 
     -- ANIM8
-    self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,self.sprite.ox,self.sprite.oy)
+     self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,self.sprite.ox,self.sprite.oy)
 
-    love.graphics.setColor(0,0,0,1)
+    --love.graphics.setColor(1,0,0,1)
+    --love.graphics.print("t: " .. tostring(hh) .. "," .. tostring(ww) .. "," .. self.sprite.path , 100,200)
 end
 
 function Enemy:speech()
