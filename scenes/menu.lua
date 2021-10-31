@@ -6,6 +6,7 @@ function MenuScene:new(manager)
     setmetatable(obj, self)
     self.__index = self
     self.scene = manager
+    self.initGame = false
     return obj
 end
 
@@ -17,19 +18,65 @@ function MenuScene:load()
     self:__config_menu()
     self:__config_keys()
     
+    -- fade in / out
+    self.alpha = 0
+    self.timerFadeIn = 0
+    self.timerFadeOut = 0
+    self.fadeIn = 3
+    self.fadeOut = 5 -- audio 5 secs
+
+    self.initGame = false
+    
     -- background
     self.bkground = Image:new('assets/pictures/menubkgroundrev01.png')
     self.bkground:load()
     self.bkground.x = (love.graphics.getWidth() / 2) - (self.bkground.width / 2)
     self.bkground.y = (love.graphics.getHeight() / 2) - (self.bkground.height / 2)
+
+    self.AudioVoice = love.audio.newSource("assets/audios/residentgrinch_Rev01.ogg", "static")
+    self.playAudioVoice = false -- para sinalizar play
+    self.playAudioVoiceActive = true -- tocar apenas 1 vez
+    
+
 end
 
 function MenuScene:update(dt)
     self:__config_tela()
     self:__config_menu()
+
+    -- calc fadeIn
+    self.timerFadeIn = self.timerFadeIn + dt
+    if self.timerFadeIn < self.fadeIn then 
+        -- =(value-min)/(max-min)
+        self.alpha = (self.timerFadeIn) / (self.fadeIn)
+    end
+
+    
+    if self.initGame then 
+        self.playAudioVoice = true
+        self.timerFadeOut = self.timerFadeOut + dt
+        -- fadeOut + audio + provavelmetne flashes:
+        if self.timerFadeOut < self.fadeOut then 
+            -- =(value-min)/(max-min)
+            self.alpha = 1 - (self.timerFadeOut / self.fadeOut )
+        end 
+        
+    end
+
+    if self.playAudioVoice and self.playAudioVoiceActive then 
+        love.audio.play(self.AudioVoice)
+        self.playAudioVoiceActive = false
+    end
+
+    if self.timerFadeOut > self.fadeOut then 
+        self.scene:change('battlefield')
+    end
 end
 
 function MenuScene:draw()
+    love.graphics.setColor(1, 1, 1, self.alpha)
+     
+
     love.graphics.clear()
     love.graphics.setBackgroundColor(255, 255, 255, 1)
     love.graphics.draw(self.bkground.image, self.bkground.x, self.bkground.y)
@@ -75,7 +122,8 @@ function MenuScene:__config_keys()
         love.event.quit(0)
     end
     self.keys.p = function()
-        self.scene:change('battlefield')
+        self.initGame = true
+        -- self.scene:change('battlefield')
     end
 end
 
