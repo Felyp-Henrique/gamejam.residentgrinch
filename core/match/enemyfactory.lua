@@ -39,7 +39,8 @@ end
 
 function EnemyFactory.random(x, y)
     math.randomseed(os.time())
-    local index = math.random(0, 3)
+    -- acho que aqui merece também um math.floor
+    local index = math.floor(math.random(0, 3))
     if index == 0 then
         return EnemyFactory.spider(x, y)
     elseif index == 1 then
