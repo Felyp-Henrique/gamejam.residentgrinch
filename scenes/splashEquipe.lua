@@ -23,7 +23,7 @@ end
 -- metodos principais
 function splashEquipe:load()
     -- imagem Love2d
-    videoIntro = love.graphics.newVideo("/assets/movies/introDrafts04nonPixel.ogv") 
+    videoIntro = love.graphics.newVideo("/assets/movies/introDrafts04nonPixelrev02.ogv") 
 
     self.timer = 0
 
