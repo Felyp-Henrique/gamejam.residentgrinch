@@ -36,6 +36,11 @@ function CavesScene:load()
     self.tiles.rockBig.path = 'assets/tiles/caves/rock_big.png'
     self.tiles.rockLittle = Image:new()
     self.tiles.rockLittle.path = 'assets/tiles/caves/rock_little.png'
+    -- som de gota
+    self.effects.soundgota = love.audio.newSource("assets/audios/ambiente_gota.ogg", "static")
+    self.effects.soundvento = love.audio.newSource("assets/audios/ambiente_vento.ogg", "static")
+    self.effects.timerSounds = 3
+    self.effects.timerSoundsMax = 6
     -- load geral
     self.effects.fog:load()
     self.tiles.floor.x = (love.graphics.getWidth() / 2)
@@ -49,6 +54,7 @@ function CavesScene:load()
     self.tiles.rockBig:load()
     self.tiles.rockLittle:load()
     self.match:load()
+    math.randomseed(os.time())
 end
 
 function CavesScene:draw()
@@ -138,10 +144,30 @@ function CavesScene:update(dt)
     self.status.match = self.match
     self.effects.fog.match = self.match
     self.effects.fog:update(dt)
+
+    self.effects.timerSounds = self.effects.timerSounds + dt
+    if self.effects.timerSounds > self.effects.timerSoundsMax then 
+         local getOne = doNumRandomico(1,10)
+         if getOne <= 5 then 
+            self.effects.soundgota:play()
+         else
+            self.effects.soundvento:play()
+         end
+         self.effects.timerSounds = 0
+         self.effects.timerSoundsMax = doNumRandomico(2, 8)
+    end
 end
 
 function CavesScene:mousepressed(x, y, button)
     self.match:mousepressed(x, y, button)
+end
+
+function doNumRandomico(min, max)
+
+    math.random()
+    math.random()
+    math.random()
+    return (math.random(min,max))
 end
 
 return CavesScene
