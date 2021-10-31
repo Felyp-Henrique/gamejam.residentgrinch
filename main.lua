@@ -10,6 +10,11 @@ local GameOverScene = require('scenes.gameover')
 local scene = Scene:new()
 
 function love.load()
+    -- configurar game
+    love.window.setIcon(love.image.newImageData('assets/icons/logo.png'))
+    love.window.setTitle('Resident Grinch 1')
+
+    -- configurar cenas
     scene:add('splash', Splash:new(scene))
     scene:add('secondsplash', SecondSplash:new(scene))
     scene:add('menu', MenuScene:new(scene))
