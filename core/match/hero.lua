@@ -64,6 +64,7 @@ function Hero:draw()
 
     local x, y = self:__getPostion()
     
+    love.graphics.setColor(1,1,1,1)
     love.graphics.draw(
         self.sprite.image,
         x,

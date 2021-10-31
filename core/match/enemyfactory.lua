@@ -18,7 +18,7 @@ function EnemyFactory.mouse(x, y)
     enemy.nick = 'Mouse'
     enemy.x = x
     enemy.y = y
-    enemy.sprite = Image:new('assets/sprites/mouse_walk.png')
+    enemy.sprite = Image:new('assets/sprites/mouse_walk.png') -- mouse_walk
     return enemy
 end
 
