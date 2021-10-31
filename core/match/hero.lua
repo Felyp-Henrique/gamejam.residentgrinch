@@ -1,5 +1,6 @@
 local Image = require('core.image')
 local Projectile = require('core.match.projectile')
+local Area = require('core.physics.area')
 
 Hero = {}
 
@@ -16,6 +17,7 @@ function Hero:new(values)
     self.oy = 0
     self.sprite = values.sprite
     self.projectiles = {}
+    self.area = Area:new()
     return obj
 end
 
@@ -23,6 +25,10 @@ end
 
 function Hero:danger(force)
     self.life = self.life - force
+end
+
+function Hero:collided(area)
+    return self.area:collided(area)
 end
 
 -- metodos para o love
@@ -36,6 +42,11 @@ function Hero:load()
     else
         self.sprite:load()
     end
+    local x, y = self:__getPostion()
+    self.area.width = self.sprite.width
+    self.area.height = self.sprite.height
+    self.area.x = x
+    self.area.y = y
     self:__configMouse()
 end
 
@@ -43,6 +54,9 @@ function Hero:update(dt)
     -- atualizar rotacao do heroi
     local x, y = self:__getPostion()
     self.r = math.atan2(love.mouse.getX() - x, y - love.mouse.getY())
+
+    self.area.x = x
+    self.area.y = y
 
     -- atualizar projetiles
     for i, proj in ipairs(self.projectiles) do

@@ -17,7 +17,14 @@ function Projectile:new(values)
     self.sy = values.sy or 1
     self.sprite = values.sprite
     self.timer = 0
+    self.area = Area:new()
     return obj
+end
+
+-- metodo principais
+
+function Projectile:collided(area)
+    return self.area:collided(area)
 end
 
 -- metodos do love
@@ -29,6 +36,10 @@ function Projectile:load()
     else
         self.sprite:load()
     end
+    self.area.width = self.sprite.width
+    self.area.height = self.sprite.height
+    self.area.x = self.x
+    self.area.y = self.y
 end
 
 function Projectile:draw()
@@ -42,6 +53,8 @@ function Projectile:draw()
         3,
         3
     )
+    self.area.x = self.x
+    self.area.y = self.y
 end
 
 function Projectile:update(dt)

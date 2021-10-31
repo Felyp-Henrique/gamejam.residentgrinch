@@ -1,6 +1,7 @@
 local Image = require('core.image')
 local anim8 = require('core.anim8')
 local flux = require('core.flux')
+local Area = require('core.physics.area')
 
 Enemy = {}
 
@@ -19,6 +20,8 @@ function Enemy:new(values)
     self.sx = 0
     self.sy = 0
     self.sprite = values.sprite or nil
+    self.isWalking = true
+    self.area = Area:new()
     return obj
 end
 
@@ -33,10 +36,13 @@ function Enemy:move(x, y)
     self.y = y or self.y
 end
 
+function Enemy:collided(area)
+    return self.area:collided(area)
+end
+
 -- metodos para o love
 
 function Enemy:load()
-    texto = ""
     if not self.sprite then
         self.sprite = Image:new('assets/sprites/hero.png')
         self.sprite:load()
@@ -45,6 +51,11 @@ function Enemy:load()
 
     self.sx = 1
     self.sy = 1
+
+    self.area.width = self.sprite.width
+    self.area.height = self.sprite.height
+    self.area.x = self.x
+    self.area.y = self.y
 
     -- ANIM8
     local g = anim8.newGrid(32, 32, self.sprite.width, self.sprite.height)
@@ -63,27 +74,20 @@ end
 
 function Enemy:update(dt)
     -- ANIM8
-    self.animation:update(dt)
+    if self.isWalking then
+        self.animation:update(dt)
+    end
+    self.area.x = self.x
+    self.area.y = self.y
 end
 
 function Enemy:draw()
     love.graphics.setColor(1,1,1,1)
-    --[[love.graphics.draw(
-        self.sprite.image,
-        self.x,
-        self.y,
-        self.r,
-        self.sx,
-        self.sy,
-        40,
-        40
-    )]]
 
     -- ANIM8
     self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,self.sprite.ox,self.sprite.oy)
 
     love.graphics.setColor(0,0,0,1)
-    love.graphics.print("t: " .. tostring(self.sprite.ox), 10, 10)
 end
 
 
