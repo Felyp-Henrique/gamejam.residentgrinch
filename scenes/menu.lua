@@ -15,7 +15,6 @@ end
 function MenuScene:load()
     self:__config_tela()
     self:__config_font()
-    self:__config_menu()
     self:__config_keys()
     
     self.globalScale = 1 -- para 800x600
@@ -48,7 +47,6 @@ end
 
 function MenuScene:update(dt)
     self:__config_tela()
-    self:__config_menu()
 
     -- calc fadeIn
     self.timerFadeIn = self.timerFadeIn + dt
@@ -86,9 +84,6 @@ function MenuScene:draw()
     love.graphics.clear()
     love.graphics.setBackgroundColor(255, 255, 255, 1)
     love.graphics.draw(self.bkground.image, self.tela.centerx, self.tela.centery, 0, self.globalScale,self.globalScale, self.bkground.ox, self.bkground.oy)
-    --love.graphics.print("Aqui deve conter o menu inicial" , 10  , 10)
-    love.graphics.print("Pressione P para ir para prototipo fog of war" , 10  , 40)
-    love.graphics.print(self.menu.text , self.menu.x  , self.menu.y)
 end
 
 function MenuScene:keypressed(key, scancode, isrepeat)
@@ -110,13 +105,6 @@ function MenuScene:__config_tela()
     self.tela.centery = love.graphics.getHeight() / 2
 end
 
-function MenuScene:__config_menu()
-    self.menu = self.menu or {}
-    self.menu.text = "Pressione ESC para sair!"
-    self.menu.x = 10
-    self.menu.y = self.tela.altura - self.font:getHeight()
-end
-
 function MenuScene:__config_font()
     self.font = love.graphics.newFont(30)
 end
@@ -130,9 +118,8 @@ function MenuScene:__config_keys()
     self.keys.escape = function ()
         love.event.quit(0)
     end
-    self.keys.p = function()
+    self.keys['return'] = function()
         self.initGame = true
-        -- self.scene:change('battlefield')
     end
 end
 

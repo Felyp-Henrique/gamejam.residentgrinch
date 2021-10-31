@@ -44,7 +44,6 @@ function FogEffect:update(dt)
 
     if ((self.picturealpha + delta) >= 0) and ((self.picturealpha+delta) < 0.1) then
         self.picturealpha = self.picturealpha + delta
-        print(self.picturealpha)
     end
 end
 

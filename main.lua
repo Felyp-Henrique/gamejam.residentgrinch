@@ -23,7 +23,7 @@ function love.load()
     scene:add('caves', CavesScene:new(scene))
     scene:add('gameover', GameOverScene:new(scene))
 
-    scene:change('menu') -- para testes
+    scene:change('splash') -- para testes
 end
 
 function love.draw()
