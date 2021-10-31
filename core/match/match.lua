@@ -70,6 +70,10 @@ function Match:draw()
     for _, enemy in ipairs(self.enemies) do
         enemy:draw()
     end
+
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.rectangle("line", 400-16, 300-16, 32, 32)
+    love.graphics.setColor(1,1,1,1)
 end
 
 function Match:update(dt)

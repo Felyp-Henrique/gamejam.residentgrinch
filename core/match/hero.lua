@@ -12,6 +12,8 @@ function Hero:new(values)
     self.r = 0
     self.sx = 1
     self.sy = 1
+    self.ox = 24
+    self.oy = 24
     self.sprite = values.sprite
     self.projectiles = {}
     return obj
@@ -27,8 +29,10 @@ end
 
 function Hero:load()
     if not self.sprite then
-        self.sprite = Image:new('assets/sprites/hero.png')
+        self.sprite = Image:new('assets/sprites/grinch.png')
         self.sprite:load()
+        self.ox = self.sprite.width / 2 -- centralizar na tela
+        self.ox = self.sprite.height / 2
     else
         self.sprite:load()
     end
@@ -63,7 +67,7 @@ function Hero:draw()
     end
 
     local x, y = self:__getPostion()
-    
+
     love.graphics.setColor(1,1,1,1)
     love.graphics.draw(
         self.sprite.image,
@@ -72,8 +76,8 @@ function Hero:draw()
         self.r,
         self.sx,
         self.sy,
-        32,
-        32
+        self.ox,
+        self.oy
     )
 end
 
@@ -87,8 +91,8 @@ end
 -- helpers
 
 function Hero:__getPostion()
-    local x = (love.graphics.getWidth() / 2) - 20
-    local y = (love.graphics.getHeight() / 2) - 20
+    local x = (love.graphics.getWidth() / 2)
+    local y = (love.graphics.getHeight() / 2)
     return x, y
 end
 
