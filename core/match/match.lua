@@ -19,6 +19,7 @@ function Match:new(values)
     self.enemies = {}
     self.gameOverScene = values.gameOverScene or "gameover"
     self.timer = 0
+    self.fogalphadelta = 0.005
     return obj
 end
 

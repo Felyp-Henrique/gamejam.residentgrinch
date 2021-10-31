@@ -18,20 +18,25 @@ function MenuScene:load()
     self:__config_menu()
     self:__config_keys()
     
+    self.globalScale = 1 -- para 800x600
+
     -- fade in / out
     self.alpha = 0
     self.timerFadeIn = 0
     self.timerFadeOut = 0
     self.fadeIn = 3
-    self.fadeOut = 5 -- audio 5 secs
+    self.fadeOut = 1 -- audio 5 secs
 
     self.initGame = false
     
     -- background
     self.bkground = Image:new('assets/pictures/menubkgroundrev01.png')
     self.bkground:load()
-    self.bkground.x = (love.graphics.getWidth() / 2) - (self.bkground.width / 2)
-    self.bkground.y = (love.graphics.getHeight() / 2) - (self.bkground.height / 2)
+    self.bkground.x = (self.tela.centerx) 
+    self.bkground.y = (self.tela.centery)
+    -- sobrescrever ox e oy
+    self.bkground.ox = self.bkground.width / 2
+    self.bkground.oy = self.bkground.height / 2
 
     self.AudioVoice = love.audio.newSource("assets/audios/residentgrinch_Rev01.ogg", "static")
     self.playAudioVoice = false -- para sinalizar play
@@ -79,8 +84,8 @@ function MenuScene:draw()
 
     love.graphics.clear()
     love.graphics.setBackgroundColor(255, 255, 255, 1)
-    love.graphics.draw(self.bkground.image, self.bkground.x, self.bkground.y)
-    love.graphics.print("Aqui deve conter o menu inicial" , 10  , 10)
+    love.graphics.draw(self.bkground.image, self.tela.centerx, self.tela.centery, 0, self.globalScale,self.globalScale, self.bkground.ox, self.bkground.oy)
+    --love.graphics.print("Aqui deve conter o menu inicial" , 10  , 10)
     love.graphics.print("Pressione P para ir para prototipo fog of war" , 10  , 40)
     love.graphics.print(self.menu.text , self.menu.x  , self.menu.y)
 end
@@ -99,6 +104,9 @@ function MenuScene:__config_tela()
     self.tela.fullscreen = self.tela.fullscreen or false
     self.tela.largura = love.graphics.getWidth()
     self.tela.altura = love.graphics.getHeight()
+    self.globalScale = self.tela.altura / 600
+    self.tela.centerx = love.graphics.getWidth() / 2
+    self.tela.centery = love.graphics.getHeight() / 2
 end
 
 function MenuScene:__config_menu()
