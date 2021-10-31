@@ -39,4 +39,8 @@ function BattlefieldScene:keypressed(key, scancode, isrepeat)
     end
 end
 
+function BattlefieldScene:mousepressed(x, y, button)
+    self.match:mousepressed(x, y, button)
+end
+
 return BattlefieldScene

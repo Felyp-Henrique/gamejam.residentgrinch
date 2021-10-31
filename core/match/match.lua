@@ -28,7 +28,6 @@ function Match:gameOver()
 end
 
 function Match:enemiesPosition()
-    math.randomseed(os.time())
     local nx, ny
     local vertical = math.floor(math.random(1.5, 2.5))
     if vertical == 1 then
@@ -43,12 +42,13 @@ function Match:enemiesPosition()
 end
 
 function Match:enemiesGenerator()
-    for _ = 1, 10 do
+    -- for _ = 1, 10 do
         local x, y = self:enemiesPosition()
+        print(x, y)
         local enemy = EnemyFactory.random(x, y)
         enemy:load()
         table.insert(self.enemies, enemy)
-    end
+    -- end
 end
 
 -- metodos para o love
@@ -58,6 +58,10 @@ function Match:load()
         self.hero = Hero:new { nick = 'Heroi' }
     end
     self.hero:load()
+    math.randomseed(os.time())
+    math.random()
+    math.random()
+    math.random()
 end
 
 function Match:draw()
@@ -72,10 +76,8 @@ function Match:update(dt)
     self.hero:update(dt)
 
     self.timer = self.timer + dt
-    if self.timer >= 3 then
-        if #self.enemies == 0 then
-            self:enemiesGenerator()
-        end
+    if self.timer >= 1.5 then
+        self:enemiesGenerator()
         self.timer = 0
     end
     for _, e in ipairs(self.enemies) do
@@ -87,5 +89,22 @@ end
 function Match:mousepressed(x, y, button)
     self.hero:mousepressed(x, y, button)
 end
+
+-- function random()
+--     local oldrandom = math.random
+--     local randomtable
+--     math.random = function (m, n)
+--         if randomtable == nil then
+--             randomtable = {}
+--             for i = 1, 97 do
+--                 randomtable[i] = oldrandom()
+--             end
+--         end
+--         local x = oldrandom(m, n)
+--         local i = 1 + math.floor(97*x)
+--         x, randomtable[i] = randomtable[i], x
+--         return x
+--     end
+-- end
 
 return Match

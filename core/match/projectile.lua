@@ -6,13 +6,15 @@ Projectile = {}
 
 function Projectile:new(values)
     local obj = {}
+    values = values or {}
     setmetatable(obj, self)
     self.__index = self
     self.x = values.x or 0
     self.y = values.y or 0
+    self.direction = values.direction or 0
     self.r = values.r or 0
-    self.sx = values.sx or 0
-    self.sy = values.sy or 0
+    self.sx = values.sx or 1
+    self.sy = values.sy or 1
     self.sprite = values.sprite
     self.timer = 0
     return obj
@@ -30,7 +32,6 @@ function Projectile:load()
 end
 
 function Projectile:draw()
-    love.graphics.rotate(-math.pi / 2)
     love.graphics.draw(
         self.sprite.image,
         self.x,
@@ -44,7 +45,8 @@ function Projectile:draw()
 end
 
 function Projectile:update(dt)
-    self.timer = self.timer + dt
+    self.x = self.x + math.cos(self.direction) * 200 * dt
+    self.y = self.y + math.sin(self.direction) * 200 * dt
 end
 
 return Projectile

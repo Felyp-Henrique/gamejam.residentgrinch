@@ -6,36 +6,36 @@ local Image = require('core.image')
 EnemyFactory = {}
 
 function EnemyFactory.spider(x, y)
-    return Enemy:new {
-        nick = 'Spider',
-        x = x,
-        y = y,
-    }
+    local enemy = Enemy:new()
+    enemy.nick = 'Spider'
+    enemy.x = x
+    enemy.y = y
+    return enemy
 end
 
 function EnemyFactory.mouse(x, y)
-    return Enemy:new {
-        nick = 'Mouse',
-        sprite = Image:new('assets/sprites/mouse_walk.png'),
-        x = x,
-        y = y,
-    }
+    local enemy = Enemy:new()
+    enemy.nick = 'Mouse'
+    enemy.x = x
+    enemy.y = y
+    enemy.sprite = Image:new('assets/sprites/mouse_walk.png')
+    return enemy
 end
 
 function EnemyFactory.bat(x, y)
-    return Enemy:new {
-        nick = 'Bat',
-        x = x,
-        y = y,
-    }
+    local enemy = Enemy:new()
+    enemy.nick = 'Bat'
+    enemy.x = x
+    enemy.y = y
+    return enemy
 end
 
 function EnemyFactory.pumpkin(x, y)
-    return Enemy:new {
-        nick = 'Pumpkin',
-        x = x,
-        y = y,
-    }
+    local enemy = Enemy:new()
+    enemy.nick = 'Pumpkin'
+    enemy.x = x
+    enemy.y = y
+    return enemy
 end
 
 function EnemyFactory.random(x, y)

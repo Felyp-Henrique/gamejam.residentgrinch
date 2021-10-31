@@ -3,6 +3,7 @@ local Image = require('core.image')
 Enemy = {}
 
 function Enemy:new(values)
+    values = values or {}
     local obj = {}
     setmetatable(obj, self)
     self.__index = self
@@ -72,9 +73,7 @@ function Enemy:draw()
 
     -- ANIMACAO
     local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
-    love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], self.sprite.x, self.sprite.y, 0, 2)
-    
-
+    love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], self.x, self.y, 0, 2)
 end
 
 -- ANIMACAO
@@ -83,7 +82,6 @@ function newAnimation(sprite, width, height, duration)
     animation.spriteSheet = sprite.image;
     animation.quads = {};
 
-    texto2 = sprite.height .. " " .. sprite.width
     for y = 0, sprite.height - height,  height do
         for x = 0, sprite.width - width, width do
             table.insert(animation.quads, love.graphics.newQuad(x, y, width, height, sprite.image:getDimensions()))
