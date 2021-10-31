@@ -75,6 +75,8 @@ function Enemy:load()
     -- x e y é o alvo (centro da tela)
     -- numero 10 -> tempo de processamento da origem até o destino
     -- self!
+
+    self.r = math.atan2(400 - self.x, self.y - 300)
 end
 
 function Enemy:update(dt)
@@ -95,9 +97,6 @@ function Enemy:draw()
 
     -- ANIM8
      self.animation:draw(self.sprite.image,self.x,self.y,self.r,self.sx,self.sy,self.sprite.ox,self.sprite.oy)
-
-    --love.graphics.setColor(1,0,0,1)
-    --love.graphics.print("t: " .. tostring(hh) .. "," .. tostring(ww) .. "," .. self.sprite.path , 100,200)
 end
 
 function Enemy:__getCenter()
