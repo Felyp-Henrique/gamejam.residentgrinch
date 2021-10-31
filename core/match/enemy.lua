@@ -110,7 +110,6 @@ function Enemy:speech()
         self.audio_spawn:play()
         self.audioplay_spawn = false
     end
-    love.audio.setVolume( 1 )
 end
 
 return Enemy
