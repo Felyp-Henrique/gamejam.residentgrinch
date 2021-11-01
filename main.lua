@@ -6,6 +6,7 @@ local BattlefieldScene = require('scenes.battlefield')
 local CavesScene = require('scenes.caves')
 local GameOverScene = require('scenes.gameover')
 local IntroGame = require('scenes.introgame')
+local Creditos = require('scenes.creditos')
 
 -- gerenciador de cenas
 
@@ -24,6 +25,7 @@ function love.load()
     scene:add('introgame', IntroGame:new(scene))
     scene:add('caves', CavesScene:new(scene))
     scene:add('gameover', GameOverScene:new(scene))
+    scene:add('creditos', Creditos:new(scene))
 
     scene:change('splash') -- para testes
 end

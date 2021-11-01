@@ -1,6 +1,6 @@
-MenuScene = {}
+creditos = {}
 
-function MenuScene:new(manager)
+function creditos:new(manager)
     assert(manager, "scene manager nao pode ser nil")
     local obj = {}
     setmetatable(obj, self)
@@ -12,25 +12,23 @@ end
 
 -- metodos principais
 
-function MenuScene:load()
+function creditos:load()
     self:__config_tela()
     self:__config_font()
     self:__config_keys()
     
-    self.globalScale = 1 -- para 800x600
-
     -- fade in / out
     self.alpha = 0
     self.timerFadeIn = 0
     self.timerFadeOut = 0
-    self.fadeIn = 3
-    self.fadeOut = 5 -- audio 5 secs
+    self.fadeIn = 4
+    self.fadeOut = 2 
 
     self.initGame = false
     
     -- background
     self.bkground = Image:new()
-    self.bkground.path = 'assets/pictures/menubkgroundrev01.png'
+    self.bkground.path = 'assets/pictures/creditosScreen.png'
     self.bkground:load()
     self.bkground.x = (self.tela.centerx) 
     self.bkground.y = (self.tela.centery)
@@ -38,14 +36,9 @@ function MenuScene:load()
     self.bkground.ox = self.bkground.width / 2
     self.bkground.oy = self.bkground.height / 2
 
-    self.AudioVoice = love.audio.newSource("assets/audios/residentgrinch_Rev01.ogg", "static")
-    self.playAudioVoice = false -- para sinalizar play
-    self.playAudioVoiceActive = true -- tocar apenas 1 vez
-    
-
 end
 
-function MenuScene:update(dt)
+function creditos:update(dt)
     self:__config_tela()
 
     -- calc fadeIn
@@ -57,7 +50,6 @@ function MenuScene:update(dt)
 
     
     if self.initGame then 
-        self.playAudioVoice = true
         self.timerFadeOut = self.timerFadeOut + dt
         -- fadeOut + audio + provavelmetne flashes:
         if self.timerFadeOut < self.fadeOut then 
@@ -67,17 +59,12 @@ function MenuScene:update(dt)
         
     end
 
-    if self.playAudioVoice and self.playAudioVoiceActive then 
-        love.audio.play(self.AudioVoice)
-        self.playAudioVoiceActive = false
-    end
-
     if self.timerFadeOut > self.fadeOut then 
-        self.scene:change('introgame')
+        self.scene:change('menu')
     end
 end
 
-function MenuScene:draw()
+function creditos:draw()
     love.graphics.setColor(1, 1, 1, self.alpha)
      
 
@@ -86,7 +73,7 @@ function MenuScene:draw()
     love.graphics.draw(self.bkground.image, self.tela.centerx, self.tela.centery, 0, self.globalScale,self.globalScale, self.bkground.ox, self.bkground.oy)
 end
 
-function MenuScene:keypressed(key, scancode, isrepeat)
+function creditos:keypressed(key, scancode, isrepeat)
     local handler = self.keys[key]
     if handler then
         handler()
@@ -95,7 +82,7 @@ end
 
 -- helpers
 
-function MenuScene:__config_tela()
+function creditos:__config_tela()
     self.tela = self.tela or {}
     self.tela.fullscreen = self.tela.fullscreen or false
     self.tela.largura = love.graphics.getWidth()
@@ -105,18 +92,18 @@ function MenuScene:__config_tela()
     self.tela.centery = love.graphics.getHeight() / 2
 end
 
-function MenuScene:__config_font()
+function creditos:__config_font()
     self.font = love.graphics.newFont(30)
 end
 
-function MenuScene:__config_keys()
+function creditos:__config_keys()
     self.keys = {}
     self.keys['return'] = function()
         self.initGame = true
     end
-    self.keys['c'] = function()
-        self.scene:change('creditos')
+    self.keys['space'] = function()
+        self.initGame = true
     end
 end
 
-return MenuScene
+return creditos
