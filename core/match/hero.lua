@@ -19,6 +19,7 @@ function Hero:new(values)
     self.sprite = values.sprite
     self.projectiles = {}
     self.area = Area:new()
+    self.match = nil
     return obj
 end
 
@@ -158,6 +159,9 @@ function Hero:__configMouse()
             table.insert(self.projectiles, proj)
             timer2ataque = 0
             self.estaatacando = true
+            if self.match.boss and self.match.lastKill then
+                self.match.bossCount = self.match.bossCount + 1
+            end
         end
     end
 end

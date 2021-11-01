@@ -2,6 +2,7 @@
 -- fabrica de enimigos, gera varios tipos de enimigos aqui
 --
 local Enemy = require('core.match.enemy')
+local Boss = require('core.match.boss')
 local Image = require('core.image')
 EnemyFactory = {}
 
@@ -59,6 +60,21 @@ function EnemyFactory.pumpkin(x, y)
     enemy.spdeath = Image:new()
     enemy.sprite.path = ('assets/sprites/abobora_spritesheet.png') -- mouse_walk
     enemy.spdeath.path = ('assets/sprites/abobora_death.png')
+    enemy.audio_spawn = love.audio.newSource("assets/audios/abobora_spawn.ogg", "static")
+    enemy.audio_death = love.audio.newSource("assets/audios/abobora_death.ogg", "static")    
+    return enemy
+end
+
+function EnemyFactory.boss(x, y)
+    local enemy = Boss:new()
+    enemy.nick = 'Boss'
+    enemy.x = x
+    enemy.y = y
+
+    enemy.sprite = Image:new() 
+    enemy.spdeath = Image:new()
+    enemy.sprite.path = ('assets/sprites/bossabobora_walk.png') -- mouse_walk
+    enemy.spdeath.path = ('assets/sprites/bossabobora_death.png')
     enemy.audio_spawn = love.audio.newSource("assets/audios/abobora_spawn.ogg", "static")
     enemy.audio_death = love.audio.newSource("assets/audios/abobora_death.ogg", "static")    
     return enemy
