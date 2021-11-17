@@ -1,16 +1,6 @@
-local Splash = require('scenes.splashLove2d')
-local SecondSplash = require('scenes.splashEquipe')
-local Scene = require('core.scene')
+local SceneManager = require('core.scenes.manager')
 local MenuScene = require('scenes.menu')
-local BattlefieldScene = require('scenes.battlefield')
-local CavesScene = require('scenes.caves')
-local GameOverScene = require('scenes.gameover')
-local IntroGame = require('scenes.introgame')
-local Creditos = require('scenes.creditos')
-
--- gerenciador de cenas
-
-local scene = Scene:new()
+local CreditosScene = require('scenes.creditos')
 
 function love.load()
     -- configurar game
@@ -18,38 +8,39 @@ function love.load()
     love.window.setTitle('Resident Grinch 1')
 
     -- configurar cenas
-    scene:add('splash', Splash:new(scene))
-    scene:add('secondsplash', SecondSplash:new(scene))
-    scene:add('menu', MenuScene:new(scene))
-    scene:add('battlefield', BattlefieldScene:new(scene))
-    scene:add('introgame', IntroGame:new(scene))
-    scene:add('caves', CavesScene:new(scene))
-    scene:add('gameover', GameOverScene:new(scene))
-    scene:add('creditos', Creditos:new(scene))
+    Game = SceneManager:new {
+        showing = 'menu',
+    }
 
-    scene:change('splash') -- para testes
+    Game:add('menu', MenuScene:new {
+        manager = Game,
+    })
+
+    Game:add('creditos', CreditosScene:new {
+        manager = Game,
+    })
 end
 
 function love.draw()
-    if scene:get()['draw'] then
-        scene:get():draw()
+    if Game:get()['draw'] then
+        Game:get():draw()
     end
 end
 
 function love.update(dt)
-    if scene:get()['update'] then
-        scene:get():update(dt)
+    if Game:get()['update'] then
+        Game:get():update(dt)
     end
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    if scene:get()['keypressed'] then
-        scene:get():keypressed(key, scancode, isrepeat)
+    if Game:get()['keypressed'] then
+        Game:get():keypressed(key, scancode, isrepeat)
     end
 end
 
 function love.mousepressed(x, y, button)
-    if scene:get()['mousepressed'] then
-        scene:get():mousepressed(x, y, button)
+    if Game:get()['mousepressed'] then
+        Game:get():mousepressed(x, y, button)
     end
 end

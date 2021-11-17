@@ -1,121 +1,121 @@
-MenuScene = {}
+local Scene = require('core.scenes.scene')
+local ImageAsset = require('core.assets.image')
+local LoveUtils = require('core.utils.love')
+local KeysEvent = require('core.events.keys')
+local FadeAnimation = require('core.animations.fade')
+local AudioAsset = require('core.assets.audio')
 
-function MenuScene:new(manager)
-    assert(manager, "scene manager nao pode ser nil")
-    local obj = {}
-    setmetatable(obj, self)
+local MenuScene = Scene:new {
+    alias = 'menu',
+}
+
+function MenuScene:new(obj)
     self.__index = self
-    self.scene = manager
-    self.initGame = false
-    return obj
+    return setmetatable(obj or {}, self)
 end
-
--- metodos principais
 
 function MenuScene:load()
-    self:__config_tela()
-    self:__config_font()
-    self:__config_keys()
-    
-    self.globalScale = 1 -- para 800x600
+    if not self.loaded then
+        -- configurar background
+        self.background = ImageAsset:new {
+            path = 'assets/pictures/menu.png',
+        }
+        self.background:load()
+        self.background.x = LoveUtils.getCenterX()
+        self.background.y = LoveUtils.getCenterY()
+        self.background.sx = LoveUtils.getScale()
+        self.background.sy = LoveUtils.getScale()
+        self.background.ox = self.background.width / 2
+        self.background.oy = self.background.height / 2
 
-    -- fade in / out
-    self.alpha = 0
-    self.timerFadeIn = 0
-    self.timerFadeOut = 0
-    self.fadeIn = 3
-    self.fadeOut = 5 -- audio 5 secs
+        -- configurar fade in/out
+        self.fadein = FadeAnimation:new {
+            duration = 3,
+        }
+        self.fadein:load()
+        self.fadein:start()
 
-    self.initGame = false
-    
-    -- background
-    self.bkground = Image:new()
-    self.bkground.path = 'assets/pictures/menubkgroundrev01.png'
-    self.bkground:load()
-    self.bkground.x = (self.tela.centerx) 
-    self.bkground.y = (self.tela.centery)
-    -- sobrescrever ox e oy
-    self.bkground.ox = self.bkground.width / 2
-    self.bkground.oy = self.bkground.height / 2
+        self.fadeoutToCreditos = FadeAnimation:new {
+            reverse = true,
+            duration = 2,
+            divisor = 2,
+            on_finish = function()
+                self.manager:show('creditos')
+                self.fadeoutToCreditos:stop()
+            end
+        }
+        self.fadeoutToCreditos:load()
 
-    self.AudioVoice = love.audio.newSource("assets/audios/residentgrinch_Rev01.ogg", "static")
-    self.playAudioVoice = false -- para sinalizar play
-    self.playAudioVoiceActive = true -- tocar apenas 1 vez
-    
+        self.fadeoutToCaves = FadeAnimation:new {
+            reverse = true,
+            divisor = 5,
+            on_finish = function()
+                self.fadeoutToCaves:stop()
+            end
+        }
+        self.fadeoutToCaves:load()
 
-end
+        -- configurar audios
+        self.audioIntro = AudioAsset:new {
+            path = 'assets/audios/intro.ogg',
+        }
+        self.audioIntro:load()
 
-function MenuScene:update(dt)
-    self:__config_tela()
+        -- configurar eventos de teclado
+        self.keys = KeysEvent:new()
 
-    -- calc fadeIn
-    self.timerFadeIn = self.timerFadeIn + dt
-    if self.timerFadeIn < self.fadeIn then 
-        -- =(value-min)/(max-min)
-        self.alpha = (self.timerFadeIn) / (self.fadeIn)
-    end
+        self.keys:add('return', function(isrepeat)
+            -- tecla: enter
+            if not isrepeat then
+                self.fadein:stop()
+                self.fadeoutToCaves:start()
+                self.audioIntro:start()
+            end
+        end)
 
-    
-    if self.initGame then 
-        self.playAudioVoice = true
-        self.timerFadeOut = self.timerFadeOut + dt
-        -- fadeOut + audio + provavelmetne flashes:
-        if self.timerFadeOut < self.fadeOut then 
-            -- =(value-min)/(max-min)
-            self.alpha = 1 - (self.timerFadeOut / self.fadeOut )
-        end 
-        
-    end
+        self.keys:add('c', function(isrepeat)
+            -- tecla: c
+            if not isrepeat then
+                self.fadein:stop()
+                self.fadeoutToCreditos:start()
+            end
+        end)
 
-    if self.playAudioVoice and self.playAudioVoiceActive then 
-        love.audio.play(self.AudioVoice)
-        self.playAudioVoiceActive = false
-    end
+        self.keys:add('escape', function()
+            -- tecla: esc
+            love.event.quit(0)
+        end)
 
-    if self.timerFadeOut > self.fadeOut then 
-        self.scene:change('introgame')
+        self.loaded = true
     end
 end
 
 function MenuScene:draw()
-    love.graphics.setColor(1, 1, 1, self.alpha)
-     
+    -- configurar fade
+    self.fadein:draw()
+    self.fadeoutToCreditos:draw()
+    self.fadeoutToCaves:draw()
 
     love.graphics.clear()
     love.graphics.setBackgroundColor(255, 255, 255, 1)
-    love.graphics.draw(self.bkground.image, self.tela.centerx, self.tela.centery, 0, self.globalScale,self.globalScale, self.bkground.ox, self.bkground.oy)
+
+    -- desenhar background
+    self.background:draw()
+end
+
+function MenuScene:update(dt)
+    self.fadein:update(dt)
+    self.fadeoutToCreditos:update(dt)
+    self.fadeoutToCaves:update(dt)
 end
 
 function MenuScene:keypressed(key, scancode, isrepeat)
-    local handler = self.keys[key]
-    if handler then
-        handler()
-    end
+    self.keys:keypressed(key, scancode, isrepeat)
 end
 
--- helpers
-
-function MenuScene:__config_tela()
-    self.tela = self.tela or {}
-    self.tela.fullscreen = self.tela.fullscreen or false
-    self.tela.largura = love.graphics.getWidth()
-    self.tela.altura = love.graphics.getHeight()
-    self.globalScale = self.tela.altura / 600 -- 600 é a altura base
-    self.tela.centerx = love.graphics.getWidth() / 2
-    self.tela.centery = love.graphics.getHeight() / 2
-end
-
-function MenuScene:__config_font()
-    self.font = love.graphics.newFont(30)
-end
-
-function MenuScene:__config_keys()
-    self.keys = {}
-    self.keys['return'] = function()
-        self.initGame = true
-    end
-    self.keys['c'] = function()
-        self.scene:change('creditos')
+function MenuScene:on_show()
+    if self.loaded then
+        self.fadein:start()
     end
 end
 

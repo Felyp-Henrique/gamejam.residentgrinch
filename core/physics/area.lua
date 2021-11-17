@@ -1,33 +1,37 @@
---
--- representa uma area de um objeto sob um plano
---
+local MathUtil = require('core.utils.math')
 
-Area = {}
+--- Estrutura area oculpada do objeto em mapa
+---
+--- @class Area
+--- @field x number
+--- @field y number
+--- @field width number
+--- @field height number
+local Area = {
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
+}
 
-function Area:new()
-    local obj = {}
-    setmetatable(obj, self)
+--- Instancia uma nova area
+---
+--- @return Area
+function Area:new(obj)
     self.__index = self
-    self.x = 0
-    self.y = 0
-    self.width = 0
-    self.height = 0
-    return obj
+    return setmetatable(obj or {}, self)
 end
 
-function Area:collided(area)
+--- Verifica se objeto colide com outro
+---
+---@param other Area
+---@return boolean
+function Area:collided(other)
     -- dividi os heights por 3 para diminuir mais as areas, deixando o inimigo
     -- mais proximo do heroi
-    local dis = distancia(self.x, self.y, area.x, area.y) - ((self.height/3) + (area.height/3))
-    return dis <= 0
-end
-
-function Area:getXs()
-
-end
-
-function distancia(x1, y1, x2, y2)
-    return math.sqrt((x2-x1)^2 + (y2-y1)^2)
+    local distance = MathUtil.distance(
+        self.x, self.y, other.x, other.y) - ((self.height/3) + (other.height/3))
+    return distance <= 0
 end
 
 return Area
