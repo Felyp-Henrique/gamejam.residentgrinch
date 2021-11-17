@@ -19,4 +19,19 @@ function Scene:new(obj)
     return setmetatable(obj or {}, self)
 end
 
+function Scene:load()
+end
+
+function Scene:draw()
+end
+
+function Scene:update(dt)
+end
+
+function love.keypressed(key, scancode, isrepeat)
+end
+
+function love.mousepressed(x, y, button)
+end
+
 return Scene

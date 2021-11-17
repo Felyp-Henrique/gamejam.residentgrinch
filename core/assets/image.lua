@@ -50,4 +50,12 @@ function ImageAsset:draw()
     )
 end
 
+function ImageAsset:draw_only_xy()
+    love.graphics.draw(
+        self.__image,
+        self.x,
+        self.y
+    )
+end
+
 return ImageAsset

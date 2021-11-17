@@ -15,6 +15,14 @@ function AudioAsset:is_running()
     return self.__audio:isPlaying()
 end
 
+--- Executar uma unica vez
+function AudioAsset:start_unique()
+    if not self.played then
+        self:start()
+        self.played = true
+    end
+end
+
 function AudioAsset:start()
     self.__audio:play()
 end
