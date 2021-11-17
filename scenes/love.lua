@@ -40,7 +40,7 @@ function LoveScene:load()
             duration = 2,
             on_finish = function()
                 self.fadeout:stop()
-                self.manager:show('menu')
+                self.manager:show('equipe')
             end,
         }
         self.fadeout:load()
