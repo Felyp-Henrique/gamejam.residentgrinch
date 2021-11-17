@@ -18,7 +18,6 @@ end
 
 function VideoAsset:start_unique()
     if not self.played then
-        print('hello')
         self:start()
         self.played = true
     end
