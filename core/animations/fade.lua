@@ -20,7 +20,7 @@ local FadeAnimation = Animation:new {
 
 function FadeAnimation:new(obj)
     self.__index = self
-    return setmetatable(obj or {}, self)
+    return setmetatable(obj, self)
 end
 
 function FadeAnimation:on_load()

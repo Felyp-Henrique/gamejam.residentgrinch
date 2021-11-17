@@ -3,6 +3,7 @@ local LoveScene = require('scenes.love')
 local MenuScene = require('scenes.menu')
 local CreditosScene = require('scenes.creditos')
 local EquipeScene = require('scenes.equipe')
+local GameOverScene = require('scenes.gameover')
 
 function love.load()
     -- configurar game
@@ -27,6 +28,10 @@ function love.load()
     })
 
     Game:add('creditos', CreditosScene:new {
+        manager = Game,
+    })
+
+    Game:add('gameover', GameOverScene:new {
         manager = Game,
     })
 end

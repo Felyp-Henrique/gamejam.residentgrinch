@@ -40,9 +40,9 @@ function MenuScene:load()
             duration = 2,
             divisor = 2,
             on_finish = function()
-                self.manager:show('creditos')
                 self.fadeoutToCreditos:stop()
-            end
+                self.manager:show('creditos')
+            end,
         }
         self.fadeoutToCreditos:load()
 
@@ -50,8 +50,10 @@ function MenuScene:load()
             reverse = true,
             divisor = 5,
             on_finish = function()
+                print('aquii')
                 self.fadeoutToCaves:stop()
-            end
+                self.manager:show('gameover')
+            end,
         }
         self.fadeoutToCaves:load()
 
