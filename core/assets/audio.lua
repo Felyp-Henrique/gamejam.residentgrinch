@@ -27,6 +27,13 @@ function AudioAsset:start()
     self.__audio:play()
 end
 
+--- Use em funcoe de love.update
+function AudioAsset:loop()
+    if not self:is_running() then
+        self:start()
+    end
+end
+
 function AudioAsset:stop()
     self.__audio:stop()
 end

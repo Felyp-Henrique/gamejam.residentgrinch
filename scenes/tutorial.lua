@@ -28,7 +28,8 @@ function TutorialScene:load()
             duration = 2,
             divisor = 2,
             on_finish = function ()
-                self.manager:show('menu')
+                self.fadeout:stop()
+                self.manager:show('cavernas')
             end,
         }
         self.fadeout:load()
