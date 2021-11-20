@@ -50,9 +50,8 @@ function MenuScene:load()
             reverse = true,
             divisor = 5,
             on_finish = function()
-                print('aquii')
                 self.fadeoutToCaves:stop()
-                self.manager:show('gameover')
+                self.manager:show('tutorial')
             end,
         }
         self.fadeoutToCaves:load()

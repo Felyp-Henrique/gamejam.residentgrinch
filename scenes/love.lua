@@ -4,6 +4,7 @@ local LoveUtils = require('core.utils.love')
 local AudioAsset = require('core.assets.audio')
 local ImageAsset = require('core.assets.image')
 local FadeAnimation = require('core.animations.fade')
+local KeysEvent = require('core.events.keys')
 
 local LoveScene = Scene:new {
     alias = 'love',
@@ -52,6 +53,14 @@ function LoveScene:load()
         self.image.x = LoveUtils.getCenterX() - (self.image.width / 2)
         self.image.y = LoveUtils.getCenterY() - (self.image.height / 2)
 
+        self.keys = KeysEvent:new()
+
+        self.keys:add('escape', function ()
+            self.audio:stop()
+            self.manager:show('equipe')
+        end)
+
+
         self.loaded = true
     end
 end
@@ -67,6 +76,10 @@ function Scene:update(dt)
     self.fadein:update(dt)
     self.fadeout:update(dt)
     self.audio:start_unique()
+end
+
+function Scene:keypressed(key, scancode, isrepeat)
+    self.keys:keypressed(key, scancode, isrepeat)
 end
 
 return LoveScene

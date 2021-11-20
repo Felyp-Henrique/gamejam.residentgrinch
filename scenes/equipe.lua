@@ -1,6 +1,7 @@
 local Scene = require('core.scenes.scene')
 local FadeAnimation = require('core.animations.fade')
 local VideoAsset = require('core.assets.video')
+local KeysEvent = require('core.events.keys')
 
 local EquipeScene = Scene:new {
     alias = 'equipe',
@@ -38,6 +39,13 @@ function EquipeScene:load()
         }
         self.video:load()
 
+        self.keys = KeysEvent:new()
+
+        self.keys:add('escape', function ()
+            self.video:stop()
+            self.manager:show('menu')
+        end)
+
         self.loaded = true
     end
 end
@@ -55,6 +63,10 @@ function EquipeScene:update(dt)
     if not self.video:is_running() then
         self.fadeout:start()
     end
+end
+
+function EquipeScene:keypressed(key, scancode, isrepeat)
+    self.keys:keypressed(key, scancode, isrepeat)
 end
 
 return EquipeScene
