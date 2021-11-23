@@ -17,4 +17,10 @@ function StatusComponent:new(obj)
     return setmetatable(obj or {}, self)
 end
 
+function StatusComponent:draw()
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print('Vida: ' .. tostring(self.life), 10, 10)
+    love.graphics.print('Pontos: ' .. tostring(self.points), 10, 30)
+end
+
 return StatusComponent

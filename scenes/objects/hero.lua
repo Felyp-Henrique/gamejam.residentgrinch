@@ -6,7 +6,7 @@ local Area = require('core.physics.area')
 --- @class HeroObject
 local HeroObject = Object:new {
     type = '',
-    area = Area:new(),
+    area = nil,
 }
 
 --- Instancia um novo heroi

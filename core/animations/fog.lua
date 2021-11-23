@@ -29,8 +29,8 @@ function FogAnimation:on_load()
         assert(self.asset, 'Asset não pode ser nulo')
         -- configurar asset
         self.asset:load()
-        self.asset.ox = self.asset.width / 2
-        self.asset.oy = self.asset.height / 2
+        self.asset.ox = 0
+        self.asset.oy = 0
         self.loaded = true
     end
 end

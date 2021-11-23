@@ -7,6 +7,9 @@ local Event = require('core.events.event')
 --- @field events table[] lista de eventos
 local MouseEvent = Event:new()
 
+MouseEvent.left = 1
+MouseEvent.right = 2
+
 function MouseEvent:new(obj)
     obj = obj or {
         events = {},

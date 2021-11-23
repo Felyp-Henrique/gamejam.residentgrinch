@@ -32,6 +32,8 @@ function ImageAsset:load()
     self.__image = love.graphics.newImage(self.path)
     self.width = self.__image:getWidth()
     self.height = self.__image:getHeight()
+    self.sx = 1
+    self.sy = 1
     -- calcular com base na largura do spritesheet
     self.ox = (self.width / (self.width / self.height)) / 2
     self.oy = self.height / 2
