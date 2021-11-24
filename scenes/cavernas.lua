@@ -6,6 +6,8 @@ local FogAnimation = require('core.animations.fog')
 local MouseEvent = require('core.events.mouse')
 local AudioAsset = require('core.assets.audio')
 local StatusComponent = require('scenes.ui.status')
+local HeroObject = require('scenes.objects.hero')
+local ProjectileObject = require('scenes.objects.projectile')
 
 local CavernasScene = Scene:new {
     alias = 'cavernas',
@@ -19,6 +21,17 @@ end
 function CavernasScene:load()
     if not self.loaded then
         self.timer = 0
+
+        self.projectiles = {}
+
+        self.world = love.physics.newWorld(0, 0)
+
+        self.hero = HeroObject:new {
+            x = love.physics.getMeter(),--LoveUtils.getCenterX() / love.physics.getMeter(),
+            y = love.physics.getMeter(),--LoveUtils.getCenterY() / love.physics.getMeter(),
+            world = self.world,
+        }
+        self.hero:load()
 
         self.chao = ImageAsset:new {
             path = 'assets/tiles/caves/floor.png',
@@ -42,8 +55,20 @@ function CavernasScene:load()
 
         self.mouse = MouseEvent:new()
 
+        -- atirar pedras
         self.mouse:add(MouseEvent.left, function()
-            print('click')
+            local direcao = math.atan2(
+                love.mouse.getY() - self.hero.y,
+                love.mouse.getX() - self.hero.x
+            )
+            local projectile = ProjectileObject:new {
+                x = self.hero.x,
+                y = self.hero.y,
+                direction = direcao,
+                world = self.world,
+            }
+            projectile:load()
+            table.insert(self.projectiles, projectile)
         end)
 
         self.fog = FogAnimation:new {
@@ -68,9 +93,17 @@ function CavernasScene:draw()
     self.chao:draw()
     self.fog:draw()
     self.status:draw()
+
+    for _, projectile in ipairs(self.projectiles) do
+        projectile:draw()
+    end
+
+    self.hero:draw()
 end
 
 function CavernasScene:update(dt)
+    self.world:update(dt)
+
     self.timer = self.timer + dt
     if self.timer >= 5 then
         self.som_gotas:loop()
@@ -81,6 +114,15 @@ function CavernasScene:update(dt)
     self.fog:update(dt)
     self.status.life = 100
     self.status.points = 1
+    self.hero.r = math.atan2(
+        love.mouse.getX() - self.hero.x,
+        self.hero.y - love.mouse.getY()
+    )
+    self.hero:update(dt)
+
+    for _, projectile in ipairs(self.projectiles) do
+        projectile:update(dt)
+    end
 end
 
 
